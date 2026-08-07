@@ -181,29 +181,36 @@ These follow the model in `PROJECT_PLAN.md`. The short version:
 
 ## Build status
 
-| Phase | Scope                                          | State                     |
-| ----- | ---------------------------------------------- | ------------------------- |
-| 1     | Schema, scaffold, routing, auth shell          | Done                      |
-| 2     | Public pages                                   | Done                      |
-| 3     | Admin forms and media uploads                  | Done                      |
-| 4     | Migrate the WordPress archive                  | Ready — SQL needs running |
-| 5     | Deploy and point the Namecheap domain          | Ready — needs your hosts  |
-| 6     | Bootstrap the admin account, test end to end   | Ready — `verify-setup.mjs` |
+Numbered to match the seven build phases in `PROJECT_PLAN.md`, so the phase
+references in `seed-content.sql` and `DEPLOYMENT.md` line up with this table.
 
-Phases 4 and 5 are built as far as they can be without your credentials:
+| Phase | Scope                                        | State                      |
+| ----- | -------------------------------------------- | -------------------------- |
+| 1     | Run `schema.sql`                             | Done — verified live       |
+| 2     | Scaffold the app, public + protected routing | Done                       |
+| 3     | Public pages                                 | Done                       |
+| 4     | Admin panel and media uploads                | Done                       |
+| 5     | Migrate the WordPress archive                | Done — `seed-content.sql` loaded |
+| 6     | Deploy and point the Namecheap domain        | Ready — needs your host    |
+| 7     | Bootstrap the admin account, test end to end | Ready — `verify-setup.mjs` |
 
-- **Phase 4** is `seed-content.sql`. All ten posts from the old blog, the
-  Praneel Singh profile, five clubs, twelve players, four tournaments, six
-  match results and the 2009 committee. It has to be run in the Supabase SQL
-  editor — the app's anon key cannot write, by design. Read the notes at the
-  top of the file first; five judgement calls are documented there, including
-  why the committee loads as *past* office bearers rather than current.
-- **Phase 5** is `vercel.json`, `netlify.toml` and `DEPLOYMENT.md`. Config for
+Phase 5 is loaded: the database holds 5 clubs, 12 players, 4 tournaments, 12
+entries, 6 results, 5 committee members, 1 event and 10 news posts, recovered
+from the old blog. Five judgement calls are documented at the top of
+`seed-content.sql` — including why the committee loads as *past* office
+bearers rather than current, and which single tournament date is a placeholder.
+
+Phases 6 and 7 are built as far as they can be without your credentials:
+
+- **Phase 6** is `vercel.json`, `netlify.toml` and `DEPLOYMENT.md`. Config for
   both hosts is committed and verified against the production build; what
   remains is connecting the repo to a host and changing DNS.
+- **Phase 7** is `verify-setup.mjs`, which performs the whole
+  add-a-tournament-and-see-it-on-the-site flow against the live project. It
+  needs an admin account to exist first.
 
-Still outstanding: `storage.sql` has not been run, so media uploads will fail
-until it is. Everything else works.
+Still outstanding: **`storage.sql` has not been run**, so media uploads will
+fail until it is. Everything else works.
 
 Every public page is built and reads live data. Each renders an explicit empty
 state when its table has no rows, so a site with an empty database reads as new
