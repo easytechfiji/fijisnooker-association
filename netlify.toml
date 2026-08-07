@@ -1,0 +1,41 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# ---------------------------------------------------------------
+# SPA fallback.
+#
+# This is the setting that makes deep links work. Routing happens in
+# the browser, so the server has no /tournaments directory to serve —
+# without this, opening or refreshing any URL other than "/" returns
+# a 404. Status 200 (not 301) so the address bar keeps the real path.
+#
+# It must come last: Netlify applies the first matching rule, and a
+# catch-all placed earlier would swallow the asset requests.
+# ---------------------------------------------------------------
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Hashed filenames, so a given URL's contents never change.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    # No 'unsafe-inline' anywhere: the Vite build emits no inline script
+    # or style, and the one inline style the app used was moved into a
+    # class so this could stay strict. If you add a third-party embed
+    # (a YouTube video, an analytics snippet) it will be blocked until
+    # you widen this — that is the policy working, not a bug.
+    # connect-src covers Supabase REST, Auth, Storage and realtime.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
