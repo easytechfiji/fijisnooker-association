@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Baize green — the table cloth, and the association's primary colour. */
+  --color-baize-50: #f2f7f3;
+  --color-baize-100: #e1efe5;
+  --color-baize-200: #c4dfcc;
+  --color-baize-300: #99c7aa;
+  --color-baize-400: #67a883;
+  --color-baize-500: #438a62;
+  --color-baize-600: #2f6e4c;
+  --color-baize-700: #26573e;
+  --color-baize-800: #204633;
+  --color-baize-900: #1b3a2b;
+  --color-baize-950: #0d2018;
+
+  /* Brass — cue tips, trophy plate, accents. */
+  --color-brass-300: #e8ce7a;
+  --color-brass-400: #d9b44a;
+  --color-brass-500: #c29a2e;
+  --color-brass-600: #9e7b22;
+
+  --font-display: Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-800 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    @apply text-baize-900;
+  }
+
+  /* Keyboard focus stays visible everywhere. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brass-500;
+  }
+}
+
+/*
+ * Styling for rendered Markdown. Applied by src/components/Markdown.tsx.
+ * Hand-written rather than pulled in via @tailwindcss/typography — the ruleset
+ * is small enough that a dependency is not worth it.
+ */
+.markdown {
+  @apply text-stone-700 leading-relaxed;
+}
+
+.markdown > * + * {
+  @apply mt-4;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  @apply mt-8 mb-2 font-semibold;
+}
+
+.markdown h1 {
+  @apply text-2xl;
+}
+
+.markdown h2 {
+  @apply text-xl;
+}
+
+.markdown h3 {
+  @apply text-lg;
+}
+
+.markdown a {
+  @apply text-baize-700 underline underline-offset-2 hover:text-baize-500;
+}
+
+.markdown ul {
+  @apply list-disc pl-6;
+}
+
+.markdown ol {
+  @apply list-decimal pl-6;
+}
+
+.markdown li + li {
+  @apply mt-1;
+}
+
+.markdown blockquote {
+  @apply border-l-4 border-baize-200 pl-4 text-stone-600 italic;
+}
+
+.markdown code {
+  @apply rounded bg-stone-100 px-1 py-0.5 text-sm;
+}
+
+.markdown pre {
+  @apply overflow-x-auto rounded bg-stone-900 p-4 text-sm text-stone-100;
+}
+
+.markdown pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.markdown img {
+  @apply max-w-full rounded;
+}
+
+.markdown table {
+  @apply w-full border-collapse text-sm;
+}
+
+.markdown th,
+.markdown td {
+  @apply border border-stone-200 px-3 py-2 text-left;
+}
+
+.markdown th {
+  @apply bg-stone-100 font-semibold;
+}
