@@ -60,17 +60,36 @@ explanation of what to fix rather than failing one request at a time.
 ## Becoming an admin
 
 Admin rights come from a row in the `admins` table — not from a flag on the
-account, and not from anything in this codebase. One time, after deploying:
+account, and not from anything in this codebase.
 
-1. Sign up through Supabase Auth (Studio → Authentication → Users → Add user,
-   or the app's own flow once sign-up is exposed).
-2. Copy that user's ID from `auth.users`.
-3. Insert it into `admins` in Studio's table editor.
-4. Sign in at `/admin/login`.
+1. Create the account: Studio → Authentication → Users → **Add user**. Tick
+   "Auto Confirm User" so you can sign in straight away.
+2. Grant it admin rights. Rather than copying the UUID by hand, run this in the
+   SQL editor with your own email:
+
+   ```sql
+   insert into public.admins (user_id)
+   select id from auth.users where email = 'you@example.com'
+   on conflict (user_id) do nothing;
+   ```
+
+   `admins` has exactly two columns — `user_id` and `created_at`. There is no
+   `email` column; the address lives in `auth.users` and the join above is how
+   you get from one to the other.
+
+3. Sign in at `/admin/login`.
 
 Signing in without that row gets you a "this account is not an admin" screen,
 and the database would reject its writes regardless. Adding further committee
 members later needs nothing more than another row.
+
+To confirm it worked without clicking through the UI:
+
+```bash
+ADMIN_EMAIL=you@example.com ADMIN_PASSWORD=... node verify-setup.mjs
+```
+
+See the next section for what that checks.
 
 ## Scripts
 
@@ -83,9 +102,30 @@ members later needs nothing more than another row.
 | `npm test`        | Vitest, one run                          |
 | `npm run test:watch` | Vitest in watch mode                  |
 
-`node render-check.mjs` is a separate check that server-renders every route and
-asserts on the output. It needs no browser and catches the class of mistake
-that type-checking cannot — a component that throws once it actually runs.
+Two standalone checks that need no browser:
+
+- **`node render-check.mjs`** server-renders every route and asserts on the
+  output. Catches the class of mistake type-checking cannot — a component that
+  throws once it actually runs. Uses a dummy Supabase key; touches no network.
+- **`node verify-setup.mjs`** runs against your **real** Supabase project. It
+  confirms `schema.sql` and `storage.sql` applied, that RLS refuses anonymous
+  writes, and — given admin credentials — performs the whole
+  add-a-tournament-and-see-it-on-the-site flow that `PROJECT_PLAN.md` phase 7
+  asks for, then deletes everything it created.
+
+  ```bash
+  node verify-setup.mjs                                    # read-only checks
+  ADMIN_EMAIL=… ADMIN_PASSWORD=… node verify-setup.mjs     # + the write flow
+  ```
+
+  Credentials come from the environment so they are never written to a file.
+  Rows it creates are prefixed `[verify]` and removed in a `finally` block; it
+  deletes only by the ids it generated, so it will not touch real data.
+
+  The write half uses two separate clients: an authenticated one to create the
+  tournament, and an anonymous one to read it back. That distinction is the
+  whole point — an admin reading its own writes proves nothing about what the
+  public can see.
 
 ## Layout
 
@@ -148,6 +188,7 @@ These follow the model in `PROJECT_PLAN.md`. The short version:
 | 3     | Admin forms and media uploads                  | Done                      |
 | 4     | Migrate the WordPress archive                  | Ready — SQL needs running |
 | 5     | Deploy and point the Namecheap domain          | Ready — needs your hosts  |
+| 6     | Bootstrap the admin account, test end to end   | Ready — `verify-setup.mjs` |
 
 Phases 4 and 5 are built as far as they can be without your credentials:
 
