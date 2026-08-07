@@ -22,11 +22,30 @@ Requires Node.js 20.19+ (developed on 24).
 npm install
 ```
 
-### 1. Apply the database schema
+### 1. Set up the database
 
-In Supabase Studio → SQL Editor → New query, paste the contents of `schema.sql`
-and run it once. It creates every table, enables Row Level Security on all of
-them, and defines the `public.is_admin()` helper the policies depend on.
+**The short way.** Paste `setup.sql` into Supabase Studio → SQL Editor and run
+it. That is everything in one go: tables, Row Level Security, the storage
+bucket and its policies, the 2009–2011 archive, and your admin grant. It needs
+**one edit** — the email address in section 5 — and prints a summary table at
+the end telling you what landed.
+
+It is safe on a database that is already set up. Every statement is idempotent,
+so running it twice changes nothing and will not overwrite edits made in the
+admin panel. Verified by executing it twice against a real Postgres — see
+`check-sql.mjs`.
+
+**The modular way**, if you would rather apply things separately:
+
+| File                | What it does                                        |
+| ------------------- | --------------------------------------------------- |
+| `schema.sql`        | Tables, RLS policies, `public.is_admin()`           |
+| `storage.sql`       | The `media` bucket and its policies                 |
+| `seed-content.sql`  | The migrated WordPress archive                      |
+
+Run them in that order. `setup.sql` is the same content combined, with
+`if not exists` guards added; `schema.sql` is kept exactly as originally
+written and is the canonical definition of the schema.
 
 ### 2. Configure environment variables
 
@@ -102,7 +121,13 @@ See the next section for what that checks.
 | `npm test`        | Vitest, one run                          |
 | `npm run test:watch` | Vitest in watch mode                  |
 
-Two standalone checks that need no browser:
+Three standalone checks that need no browser:
+
+- **`node check-sql.mjs`** runs `setup.sql` against a real Postgres (PGlite,
+  compiled to WASM) and asserts on the result — twice over, since the file's
+  main promise is that re-applying it is safe. Run this after editing any SQL.
+  Needs a one-off `npm install --no-save @electric-sql/pglite`.
+
 
 - **`node render-check.mjs`** server-renders every route and asserts on the
   output. Catches the class of mistake type-checking cannot — a component that
