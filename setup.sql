@@ -1,5 +1,5 @@
 -- ============================================================
--- Fiji Southern Snooker Association — complete database setup
+-- Billiards & Snooker Association of Fiji — complete database setup
 --
 -- Everything in one file: schema, storage, the 2009–2011 archive,
 -- and your admin grant. Paste the whole thing into the Supabase

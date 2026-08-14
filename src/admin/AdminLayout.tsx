@@ -1,5 +1,7 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth.ts'
+import { Logo } from '../components/Logo.tsx'
+import { ASSOCIATION_SHORT } from '../lib/brand.ts'
 
 const sections = [
   { to: '/admin', label: 'Dashboard', end: true },
@@ -25,10 +27,18 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <header className="bg-baize-900 text-white">
+      <header className="felt text-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6">
-          <Link to="/admin" className="font-[family-name:var(--font-display)] text-lg font-bold">
-            Administration
+          <Link to="/admin" className="flex items-center gap-3">
+            <Logo className="size-9 shrink-0" />
+            <span className="leading-none">
+              <span className="block font-[family-name:var(--font-display)] text-lg font-bold">
+                Administration
+              </span>
+              <span className="eyebrow mt-1 block text-brass-300">
+                {ASSOCIATION_SHORT}
+              </span>
+            </span>
           </Link>
           <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-baize-200 sm:inline">{user?.email}</span>

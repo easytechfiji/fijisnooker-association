@@ -1,5 +1,5 @@
 -- ============================================================
--- Fiji Southern Snooker Association — migrated historical content
+-- Billiards & Snooker Association of Fiji — migrated historical content
 --
 -- Phase 5 of PROJECT_PLAN.md: the archive of
 -- https://fijisnooker.wordpress.com/ (2009–2011), which was still

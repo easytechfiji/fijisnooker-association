@@ -1,43 +1,154 @@
 @import 'tailwindcss';
 
+/*
+ * The palette is sampled from the association badge (public/logo.jpg):
+ * the palm green, the sun gold, the sea blue. Token names are kept from the
+ * first build so every screen — including the admin panel — picks up the new
+ * colours without touching its markup.
+ */
 @theme {
-  /* Baize green — the table cloth, and the association's primary colour. */
-  --color-baize-50: #f2f7f3;
-  --color-baize-100: #e1efe5;
-  --color-baize-200: #c4dfcc;
-  --color-baize-300: #99c7aa;
-  --color-baize-400: #67a883;
-  --color-baize-500: #438a62;
-  --color-baize-600: #2f6e4c;
-  --color-baize-700: #26573e;
-  --color-baize-800: #204633;
-  --color-baize-900: #1b3a2b;
-  --color-baize-950: #0d2018;
+  /* Palm green — the badge's ring and lettering, and the table cloth. Primary. */
+  --color-baize-50: #eef7f1;
+  --color-baize-100: #d4ecdd;
+  --color-baize-200: #a9d8bc;
+  --color-baize-300: #73bd96;
+  --color-baize-400: #41a071;
+  --color-baize-500: #1a7a3c;
+  --color-baize-600: #146434;
+  --color-baize-700: #11512d;
+  --color-baize-800: #0e4028;
+  --color-baize-900: #0b3826;
+  --color-baize-950: #052016;
 
-  /* Brass — cue tips, trophy plate, accents. */
-  --color-brass-300: #e8ce7a;
-  --color-brass-400: #d9b44a;
-  --color-brass-500: #c29a2e;
-  --color-brass-600: #9e7b22;
+  /* Sun gold — the badge's disc. Accents, highlights, the primary button. */
+  --color-brass-100: #fdf4d3;
+  --color-brass-200: #fbe8a4;
+  --color-brass-300: #f7d76b;
+  --color-brass-400: #f0c419;
+  --color-brass-500: #d9ab08;
+  --color-brass-600: #a67f06;
+  --color-brass-700: #7a5d08;
 
-  --font-display: Georgia, 'Times New Roman', serif;
+  /* Sea blue — the badge's water. Secondary accent, calendar events. */
+  --color-ocean-100: #dcf1f8;
+  --color-ocean-200: #b3e2f1;
+  --color-ocean-300: #77cde6;
+  --color-ocean-400: #2aa7cf;
+  --color-ocean-500: #1c88ac;
+  --color-ocean-600: #176d8b;
+
+  --font-display:
+    'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
 }
 
 @layer base {
   body {
-    @apply bg-stone-50 text-stone-800 antialiased;
+    @apply bg-stone-50 text-stone-700 antialiased;
   }
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     font-family: var(--font-display);
-    @apply text-baize-900;
+    @apply font-bold tracking-tight text-baize-900;
+  }
+
+  h1 {
+    letter-spacing: -0.025em;
+  }
+
+  /*
+   * The standings table abbreviates its columns (P, W, FW…). The browser
+   * default draws a tight dotted underline that reads as a typo at this size —
+   * keep the hint, push it clear of the glyph.
+   */
+  abbr[title] {
+    @apply cursor-help underline decoration-stone-300 decoration-dotted underline-offset-4;
   }
 
   /* Keyboard focus stays visible everywhere. */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brass-500;
+  }
+
+  ::selection {
+    @apply bg-brass-300 text-baize-950;
+  }
+}
+
+@layer components {
+  /*
+   * The page behind the content. A warm parchment base rather than another
+   * near-white, so the white cards sitting on it actually read as raised —
+   * on stone-50 the two were within a couple of percent of each other and the
+   * whole page flattened out. Over it, three soft washes in the badge's own
+   * colours (sun, palm, sea) and a faint diagonal weave for texture.
+   *
+   * Fixed, so scrolling does not drag the washes up the screen.
+   */
+  .page-bg {
+    background-color: #f4efe3;
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        rgb(11 56 38 / 0.028) 0 1px,
+        transparent 1px 7px
+      ),
+      radial-gradient(
+        42rem 26rem at 100% -2rem,
+        rgb(240 196 25 / 0.34),
+        transparent 62%
+      ),
+      radial-gradient(
+        38rem 26rem at -8% 32%,
+        rgb(26 122 60 / 0.2),
+        transparent 62%
+      ),
+      radial-gradient(
+        44rem 30rem at 72% 104%,
+        rgb(42 167 207 / 0.18),
+        transparent 62%
+      );
+    background-attachment: fixed;
+  }
+
+  /*
+   * The hero and footer share one backdrop: deep baize with the badge's sun
+   * bleeding in from the top right. Written here rather than as a stack of
+   * arbitrary Tailwind gradient utilities because two elements use it and the
+   * utility version is unreadable.
+   */
+  .felt {
+    background-color: var(--color-baize-900);
+    background-image:
+      radial-gradient(
+        60rem 30rem at 85% -10%,
+        rgb(240 196 25 / 0.22),
+        transparent 60%
+      ),
+      radial-gradient(
+        40rem 24rem at 5% 110%,
+        rgb(42 167 207 / 0.18),
+        transparent 60%
+      ),
+      linear-gradient(160deg, var(--color-baize-800), var(--color-baize-950));
+  }
+
+  /* Uppercase micro-label above a heading. */
+  .eyebrow {
+    @apply text-xs font-semibold tracking-[0.14em] uppercase;
+  }
+
+  /* The short gold rule that sits under section and page headings. */
+  .rule {
+    @apply block h-[3px] w-10 rounded-full bg-brass-400;
+  }
+
+  /* Inline text link in body copy. */
+  .link {
+    @apply font-medium text-baize-600 underline decoration-baize-300 underline-offset-2 transition-colors hover:text-baize-800 hover:decoration-brass-400;
   }
 }
 
@@ -73,15 +184,15 @@
 }
 
 .markdown a {
-  @apply text-baize-700 underline underline-offset-2 hover:text-baize-500;
+  @apply font-medium text-baize-600 underline decoration-baize-300 underline-offset-2 hover:text-baize-800 hover:decoration-brass-400;
 }
 
 .markdown ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 marker:text-brass-400;
 }
 
 .markdown ol {
-  @apply list-decimal pl-6;
+  @apply list-decimal pl-6 marker:text-brass-500;
 }
 
 .markdown li + li {
@@ -89,7 +200,7 @@
 }
 
 .markdown blockquote {
-  @apply border-l-4 border-baize-200 pl-4 text-stone-600 italic;
+  @apply border-l-[3px] border-brass-400 bg-brass-100/40 py-2 pr-3 pl-4 text-stone-600 italic;
 }
 
 .markdown code {
@@ -97,7 +208,7 @@
 }
 
 .markdown pre {
-  @apply overflow-x-auto rounded bg-stone-900 p-4 text-sm text-stone-100;
+  @apply overflow-x-auto rounded-lg bg-baize-950 p-4 text-sm text-stone-100;
 }
 
 .markdown pre code {
@@ -105,7 +216,7 @@
 }
 
 .markdown img {
-  @apply max-w-full rounded;
+  @apply max-w-full rounded-lg;
 }
 
 .markdown table {
@@ -119,4 +230,8 @@
 
 .markdown th {
   @apply bg-stone-100 font-semibold;
+}
+
+.markdown hr {
+  @apply border-stone-200;
 }

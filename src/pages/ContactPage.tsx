@@ -27,7 +27,10 @@ export function ContactPage() {
 
       <div className="grid gap-10 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <h2 className="mb-4 text-xl">Who to contact</h2>
+          <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+            <span className="rule" aria-hidden="true" />
+            Who to contact
+          </h2>
 
           <QueryBoundary loading={loading} error={error} data={data}>
             {(members) => {
@@ -46,23 +49,20 @@ export function ContactPage() {
               }
 
               return (
-                <ul className="divide-y divide-stone-100 rounded-lg border border-stone-200 bg-white">
+                <ul className="divide-y divide-stone-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
                   {contactable.map((member) => (
                     <li
                       key={member.id}
-                      className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3"
+                      className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3.5"
                     >
                       <div>
-                        <p className="font-medium text-stone-800">{member.role}</p>
+                        <p className="font-semibold text-baize-800">{member.role}</p>
                         <p className="text-sm text-stone-500">{member.name}</p>
                       </div>
                       <div className="text-sm">
                         {member.contact_email ? (
                           <p>
-                            <a
-                              href={`mailto:${member.contact_email}`}
-                              className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
-                            >
+                            <a href={`mailto:${member.contact_email}`} className="link">
                               {member.contact_email}
                             </a>
                           </p>
@@ -101,21 +101,21 @@ export function ContactPage() {
         </div>
 
         <aside className="space-y-6">
-          <section className="rounded-lg border border-stone-200 bg-white p-5">
+          <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80">
             <h2 className="text-base">Submitting results</h2>
             <p className="mt-2 text-sm text-stone-600">
               Match results and tournament details are entered by the committee.
               Send scorecards to the secretary and they will appear under{' '}
               <Link
                 to="/tournaments"
-                className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
+                className="link"
               >
                 tournaments
               </Link>{' '}
               and in the{' '}
               <Link
                 to="/rankings"
-                className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
+                className="link"
               >
                 rankings
               </Link>
@@ -123,13 +123,13 @@ export function ContactPage() {
             </p>
           </section>
 
-          <section className="rounded-lg border border-stone-200 bg-white p-5">
+          <section className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80">
             <h2 className="text-base">Committee</h2>
             <p className="mt-2 text-sm text-stone-600">
               The full list of office bearers, including past terms, is on the{' '}
               <Link
                 to="/committee"
-                className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
+                className="link"
               >
                 committee page
               </Link>

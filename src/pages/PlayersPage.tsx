@@ -63,7 +63,7 @@ export function PlayersPage() {
     <>
       <PageHeader
         title="Players"
-        description="Profiles for players registered with the Southern Division."
+        description="Profiles for players registered with the association."
       />
 
       <QueryBoundary loading={loading} error={error} data={data}>
@@ -72,19 +72,33 @@ export function PlayersPage() {
             <EmptyState message="No players have been added yet." />
           ) : (
             <>
-              <div className="mb-6 flex flex-wrap items-baseline gap-3">
+              <div className="mb-6 flex flex-wrap items-center gap-3">
                 <label htmlFor="player-search" className="sr-only">
                   Search players
                 </label>
-                <input
-                  id="player-search"
-                  type="search"
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Search by name or club"
-                  className="w-full max-w-xs rounded-md border border-stone-300 bg-white px-3 py-2 text-sm placeholder:text-stone-400 focus:border-baize-500 focus:outline-none sm:w-auto"
-                />
-                <p className="text-sm text-stone-500">
+                <div className="relative w-full sm:w-72">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-stone-400"
+                  >
+                    <circle cx="9" cy="9" r="5.5" />
+                    <path d="M13 13l4 4" />
+                  </svg>
+                  <input
+                    id="player-search"
+                    type="search"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Search by name or club"
+                    className="w-full rounded-lg bg-white py-2.5 pr-3 pl-9 text-sm shadow-sm ring-1 ring-stone-300 ring-inset transition placeholder:text-stone-400 focus:ring-2 focus:ring-baize-500 focus:outline-none"
+                  />
+                </div>
+                <p className="text-sm text-stone-500 tabular-nums">
                   {visible.length} of {players.length}
                 </p>
               </div>
@@ -99,7 +113,7 @@ export function PlayersPage() {
                       <li key={player.id}>
                         <Link
                           to={`/players/${player.id}`}
-                          className="flex h-full gap-4 rounded-lg border border-stone-200 bg-white p-4 transition hover:border-baize-300 hover:shadow-md"
+                          className="flex h-full gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-baize-950/5 hover:ring-baize-300"
                         >
                           <PlayerAvatar
                             name={player.name}

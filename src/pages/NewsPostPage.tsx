@@ -32,10 +32,7 @@ export function NewsPostPage() {
       <div className="mx-auto max-w-2xl">
         <EmptyState message="That post could not be found. It may have been removed, or the link may be wrong." />
         <p className="mt-4 text-center">
-          <Link
-            to="/"
-            className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
-          >
+          <Link to="/" className="link">
             Back to the news feed
           </Link>
         </p>
@@ -47,26 +44,27 @@ export function NewsPostPage() {
     <article className="mx-auto max-w-3xl">
       <Link
         to="/"
-        className="text-sm text-baize-700 underline underline-offset-2 hover:text-baize-500"
+        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
       >
-        ← All news
+        <span aria-hidden="true">←</span> All news
       </Link>
 
       <header className="mt-4 mb-8 border-b border-stone-200 pb-6">
         <time
           dateTime={data.published_at}
-          className="text-xs tracking-wide text-stone-500 uppercase"
+          className="eyebrow text-brass-600"
         >
           {formatDate(data.published_at)}
         </time>
-        <h1 className="mt-2 text-3xl">{data.title}</h1>
+        <h1 className="mt-2 text-3xl sm:text-4xl sm:leading-tight">{data.title}</h1>
+        <span className="rule mt-5" aria-hidden="true" />
       </header>
 
       {data.cover_image_url ? (
         <img
           src={data.cover_image_url}
           alt=""
-          className="mb-8 w-full rounded-lg bg-stone-100 object-cover"
+          className="mb-8 w-full rounded-xl bg-stone-100 object-cover shadow-sm ring-1 ring-stone-200/80"
         />
       ) : null}
 

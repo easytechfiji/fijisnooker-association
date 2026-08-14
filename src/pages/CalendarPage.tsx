@@ -100,7 +100,7 @@ export function CalendarPage() {
     <>
       <PageHeader
         title="Calendar"
-        description="Fixtures, meetings and tournament dates for the Southern Division."
+        description="Fixtures, meetings and tournament dates for the association."
       />
 
       <QueryBoundary loading={loading} error={error} data={data}>
@@ -110,17 +110,21 @@ export function CalendarPage() {
               <button
                 type="button"
                 onClick={() => goToMonth(-1)}
-                className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm hover:border-baize-400 hover:text-baize-700"
+                aria-label="Previous month"
+                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-baize-700 hover:ring-baize-400"
               >
-                ← Previous
+                <span aria-hidden="true">←</span>
+                <span className="ml-1.5 hidden sm:inline">Previous</span>
               </button>
               <h2 className="text-xl">{label}</h2>
               <button
                 type="button"
                 onClick={() => goToMonth(1)}
-                className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm hover:border-baize-400 hover:text-baize-700"
+                aria-label="Next month"
+                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-baize-700 hover:ring-baize-400"
               >
-                Next →
+                <span className="mr-1.5 hidden sm:inline">Next</span>
+                <span aria-hidden="true">→</span>
               </button>
             </div>
 
@@ -128,8 +132,8 @@ export function CalendarPage() {
               <EmptyState message="Nothing on the calendar yet. Events and tournaments added in the admin panel appear here." />
             ) : (
               <>
-                <div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
-                  <div className="grid grid-cols-7 border-b border-stone-200 bg-stone-50 text-center text-xs tracking-wide text-stone-500 uppercase">
+                <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
+                  <div className="grid grid-cols-7 border-b border-stone-200 bg-stone-50 text-center text-xs font-semibold tracking-wide text-stone-500 uppercase">
                     {WEEKDAYS.map((day) => (
                       <div key={day} className="py-2">
                         {day}
@@ -146,14 +150,14 @@ export function CalendarPage() {
                           key={date ?? `pad-${index}`}
                           className={`min-h-24 border-r border-b border-stone-100 p-1.5 last:border-r-0 ${
                             date ? '' : 'bg-stone-50/60'
-                          } ${isToday ? 'bg-brass-300/15' : ''}`}
+                          } ${isToday ? 'bg-brass-100/60' : ''}`}
                         >
                           {date ? (
                             <>
                               <span
                                 className={`inline-flex size-6 items-center justify-center rounded-full text-xs tabular-nums ${
                                   isToday
-                                    ? 'bg-baize-700 font-semibold text-white'
+                                    ? 'bg-baize-600 font-bold text-white'
                                     : 'text-stone-500'
                                 }`}
                               >
@@ -161,10 +165,10 @@ export function CalendarPage() {
                               </span>
                               <ul className="mt-1 space-y-1">
                                 {entries.map((entry) => {
-                                  const classes = `block truncate rounded px-1 py-0.5 text-[11px] leading-tight ${
+                                  const classes = `block truncate rounded px-1.5 py-0.5 text-[11px] leading-tight font-medium ${
                                     entry.kind === 'tournament'
                                       ? 'bg-baize-100 text-baize-800'
-                                      : 'bg-brass-300/40 text-brass-600'
+                                      : 'bg-ocean-100 text-ocean-600'
                                   }`
                                   return (
                                     <li key={entry.key}>
@@ -193,23 +197,32 @@ export function CalendarPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex gap-4 text-xs text-stone-500">
+                <div className="mt-4 flex gap-5 text-xs text-stone-500">
                   <span className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-sm bg-baize-100" /> Tournament
+                    <span className="size-3 rounded-sm bg-baize-100 ring-1 ring-baize-300" />{' '}
+                    Tournament
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-sm bg-brass-300/40" /> Event
+                    <span className="size-3 rounded-sm bg-ocean-100 ring-1 ring-ocean-300" />{' '}
+                    Event
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="size-3 rounded-sm bg-brass-100 ring-1 ring-brass-400" />{' '}
+                    Today
                   </span>
                 </div>
 
-                <section className="mt-10">
-                  <h2 className="mb-4 text-xl">Upcoming events</h2>
+                <section className="mt-12">
+                  <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+                    <span className="rule" aria-hidden="true" />
+                    Upcoming events
+                  </h2>
                   {upcoming.length === 0 ? (
                     <EmptyState message="No events scheduled." />
                   ) : (
-                    <ul className="divide-y divide-stone-100 rounded-lg border border-stone-200 bg-white">
+                    <ul className="divide-y divide-stone-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
                       {upcoming.map((event) => (
-                        <li key={event.id} className="px-4 py-3">
+                        <li key={event.id} className="px-4 py-3.5">
                           <div className="flex flex-wrap items-baseline justify-between gap-2">
                             <h3 className="text-base">{event.title}</h3>
                             <time
@@ -233,15 +246,18 @@ export function CalendarPage() {
                   )}
                 </section>
 
-                <section className="mt-10">
-                  <h2 className="mb-4 text-xl">Tournament dates</h2>
-                  <ul className="divide-y divide-stone-100 rounded-lg border border-stone-200 bg-white">
+                <section className="mt-12">
+                  <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+                    <span className="rule" aria-hidden="true" />
+                    Tournament dates
+                  </h2>
+                  <ul className="divide-y divide-stone-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
                     {tournaments.map((tournament) => (
-                      <li key={tournament.id} className="px-4 py-3">
+                      <li key={tournament.id} className="px-4 py-3.5 transition-colors hover:bg-stone-50">
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <Link
                             to={`/tournaments/${tournament.id}`}
-                            className="text-base text-stone-800 hover:text-baize-700 hover:underline"
+                            className="font-medium text-stone-800 hover:text-baize-700 hover:underline"
                           >
                             {tournament.name}
                           </Link>

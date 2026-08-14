@@ -74,10 +74,7 @@ export function TournamentPage() {
       <div className="mx-auto max-w-2xl">
         <EmptyState message="That tournament could not be found." />
         <p className="mt-4 text-center">
-          <Link
-            to="/tournaments"
-            className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
-          >
+          <Link to="/tournaments" className="link">
             All tournaments
           </Link>
         </p>
@@ -110,45 +107,46 @@ export function TournamentPage() {
     <>
       <Link
         to="/tournaments"
-        className="text-sm text-baize-700 underline underline-offset-2 hover:text-baize-500"
+        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
       >
-        ← All tournaments
+        <span aria-hidden="true">←</span> All tournaments
       </Link>
 
-      <header className="mt-4 mb-8 border-b border-stone-200 pb-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-3xl">{tournament.name}</h1>
+      <header className="felt mt-4 mb-8 rounded-2xl px-6 py-8 shadow-lg shadow-baize-950/10 sm:px-8">
+        <div className="flex flex-wrap items-center gap-4">
+          <h1 className="text-3xl text-white sm:text-4xl">{tournament.name}</h1>
           <StatusBadge status={tournament.status} />
         </div>
-        <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-sm">
+
+        <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 text-sm">
           <div>
-            <dt className="text-stone-400">Dates</dt>
-            <dd className="text-stone-700">
+            <dt className="eyebrow text-baize-300">Dates</dt>
+            <dd className="mt-1 font-medium text-white">
               {formatDateRange(tournament.start_date, tournament.end_date)}
             </dd>
           </div>
           {tournament.venue ? (
             <div>
-              <dt className="text-stone-400">Venue</dt>
-              <dd className="text-stone-700">{tournament.venue}</dd>
+              <dt className="eyebrow text-baize-300">Venue</dt>
+              <dd className="mt-1 font-medium text-white">{tournament.venue}</dd>
             </div>
           ) : null}
           {tournament.format ? (
             <div>
-              <dt className="text-stone-400">Format</dt>
-              <dd className="text-stone-700">{tournament.format}</dd>
+              <dt className="eyebrow text-baize-300">Format</dt>
+              <dd className="mt-1 font-medium text-white">{tournament.format}</dd>
             </div>
           ) : null}
           <div>
-            <dt className="text-stone-400">Matches played</dt>
-            <dd className="text-stone-700">
+            <dt className="eyebrow text-baize-300">Matches played</dt>
+            <dd className="mt-1 font-medium text-white tabular-nums">
               {played.length} of {matches.length}
             </dd>
           </div>
           {best !== null ? (
             <div>
-              <dt className="text-stone-400">Highest break</dt>
-              <dd className="font-semibold text-brass-600">{best}</dd>
+              <dt className="eyebrow text-baize-300">Highest break</dt>
+              <dd className="mt-1 font-bold text-brass-300 tabular-nums">{best}</dd>
             </div>
           ) : null}
         </dl>
@@ -156,7 +154,10 @@ export function TournamentPage() {
 
       <div className="grid gap-10 lg:grid-cols-3">
         <section className="lg:col-span-2">
-          <h2 className="mb-4 text-xl">Results</h2>
+          <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+            <span className="rule" aria-hidden="true" />
+            Results
+          </h2>
           {matches.length === 0 ? (
             <EmptyState message="No matches have been recorded for this tournament yet." />
           ) : (
@@ -166,11 +167,17 @@ export function TournamentPage() {
 
         <aside className="space-y-10">
           <section>
-            <h2 className="mb-4 text-xl">Field</h2>
+            <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+              <span className="rule" aria-hidden="true" />
+              Field
+              <span className="text-sm font-normal text-stone-400 tabular-nums">
+                {field.length}
+              </span>
+            </h2>
             {field.length === 0 ? (
               <EmptyState message="No entries recorded." />
             ) : (
-              <ul className="divide-y divide-stone-100 rounded-lg border border-stone-200 bg-white">
+              <ul className="divide-y divide-stone-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
                 {field.map(({ entry, player }) => (
                   <li key={entry.id}>
                     <Link
@@ -186,7 +193,7 @@ export function TournamentPage() {
                         {player.name}
                       </span>
                       {entry.seed !== null ? (
-                        <span className="text-xs text-stone-400">
+                        <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-medium text-stone-500 tabular-nums">
                           Seed {entry.seed}
                         </span>
                       ) : null}
@@ -199,7 +206,10 @@ export function TournamentPage() {
 
           {played.length > 0 && field.length > 0 ? (
             <section>
-              <h2 className="mb-4 text-xl">Tournament standings</h2>
+              <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+                <span className="rule" aria-hidden="true" />
+                Standings
+              </h2>
               <StandingsTable standings={standings} compact />
             </section>
           ) : null}

@@ -52,14 +52,14 @@ export function MatchList({
   tournamentNames?: Map<string, string>
 }) {
   return (
-    <ul className="divide-y divide-stone-100 rounded-lg border border-stone-200 bg-white">
+    <ul className="divide-y divide-stone-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
       {matches.map((match) => {
         const winner = winnerOf(match)
         const decided = isDecided(match)
         const scored = isCompleted(match)
 
         return (
-          <li key={match.id} className="px-4 py-3">
+          <li key={match.id} className="px-4 py-3.5 transition-colors hover:bg-stone-50/70">
             <div className="flex items-center gap-3">
               <div className="grid min-w-0 flex-1 grid-cols-[1fr_auto_1fr] items-center gap-3">
                 <Side
@@ -69,8 +69,10 @@ export function MatchList({
                   align="left"
                 />
                 <span
-                  className={`rounded px-2 py-0.5 text-sm font-semibold tabular-nums ${
-                    scored ? 'bg-baize-50 text-baize-800' : 'text-stone-400'
+                  className={`rounded-md px-2.5 py-1 text-sm font-bold tabular-nums ${
+                    scored
+                      ? 'bg-baize-50 text-baize-800 ring-1 ring-baize-200 ring-inset'
+                      : 'text-stone-400'
                   }`}
                 >
                   {formatScore(match.score1, match.score2)}
@@ -84,7 +86,7 @@ export function MatchList({
               </div>
             </div>
 
-            <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-500">
+            <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-500">
               {tournamentNames && tournamentNames.has(match.tournament_id) ? (
                 <Link
                   to={`/tournaments/${match.tournament_id}`}
@@ -96,7 +98,7 @@ export function MatchList({
               {match.round ? <span>{match.round}</span> : null}
               {match.played_at ? <span>{formatShortDate(match.played_at)}</span> : null}
               {match.highest_break !== null ? (
-                <span className="text-brass-600">
+                <span className="font-semibold text-brass-700">
                   Highest break {match.highest_break}
                 </span>
               ) : null}

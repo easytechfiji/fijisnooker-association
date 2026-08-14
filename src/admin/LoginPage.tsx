@@ -3,6 +3,8 @@ import type { FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth.ts'
 import { ErrorMessage } from '../components/ui/ErrorMessage.tsx'
+import { Logo } from '../components/Logo.tsx'
+import { ASSOCIATION_NAME } from '../lib/brand.ts'
 
 export default function LoginPage() {
   const { session, loading, signIn } = useAuth()
@@ -36,11 +38,12 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-baize-900 px-4">
-      <div className="w-full max-w-sm rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="text-2xl">Committee login</h1>
-        <p className="mt-2 mb-6 text-sm text-stone-600">
-          Fiji Southern Snooker Association administration.
+    <main className="felt flex min-h-screen items-center justify-center px-4 py-10">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl shadow-baize-950/30">
+        <Logo className="mx-auto size-16" />
+        <h1 className="mt-5 text-center text-2xl">Committee login</h1>
+        <p className="mt-2 mb-6 text-center text-sm text-stone-600">
+          {ASSOCIATION_NAME} administration.
         </p>
 
         <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">

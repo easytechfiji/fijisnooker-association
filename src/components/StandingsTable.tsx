@@ -26,10 +26,10 @@ export function StandingsTable({
   const ranks = assignRanks(standings)
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-stone-200 bg-white">
+    <div className="overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-stone-200/80">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-stone-200 bg-stone-50 text-left text-xs tracking-wide text-stone-500 uppercase">
+          <tr className="border-b border-stone-200 bg-stone-50 text-left text-xs font-semibold tracking-wide text-stone-500 uppercase">
             <th scope="col" className="px-3 py-2 font-medium">
               #
             </th>
@@ -66,19 +66,38 @@ export function StandingsTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-stone-100">
-          {standings.map((standing, index) => (
-            <tr key={standing.playerId} className="hover:bg-stone-50">
-              <td className="px-3 py-2 text-stone-400 tabular-nums">{ranks[index]}</td>
-              <td className="px-3 py-2">
+          {standings.map((standing, index) => {
+            /* The podium gets a gold rail down the left so the top of the
+             * table reads at a glance rather than by scanning the rank column. */
+            const rank = ranks[index]
+            const podium = rank <= 3
+
+            return (
+            <tr
+              key={standing.playerId}
+              className={`transition-colors hover:bg-stone-50 ${
+                podium ? 'bg-brass-100/25' : ''
+              }`}
+            >
+              <td
+                className={`border-l-2 px-3 py-2.5 font-semibold tabular-nums ${
+                  podium
+                    ? 'border-brass-400 text-brass-700'
+                    : 'border-transparent text-stone-400'
+                }`}
+              >
+                {rank}
+              </td>
+              <td className="px-3 py-2.5">
                 <Link
                   to={`/players/${standing.playerId}`}
-                  className="text-stone-800 hover:text-baize-700 hover:underline"
+                  className="font-medium text-stone-800 hover:text-baize-700 hover:underline"
                 >
                   {standing.name}
                 </Link>
               </td>
               <td className="px-3 py-2 text-right tabular-nums">{standing.played}</td>
-              <td className="px-3 py-2 text-right font-semibold tabular-nums">
+              <td className="px-3 py-2 text-right font-semibold text-baize-700 tabular-nums">
                 {standing.won}
               </td>
               <td className="px-3 py-2 text-right tabular-nums">{standing.lost}</td>
@@ -109,7 +128,8 @@ export function StandingsTable({
                 </td>
               )}
             </tr>
-          ))}
+            )
+          })}
         </tbody>
       </table>
     </div>
