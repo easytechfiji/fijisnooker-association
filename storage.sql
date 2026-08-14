@@ -1,5 +1,5 @@
 -- ============================================================
--- Fiji Southern Snooker Association — Supabase Storage setup
+-- Billiards & Snooker Association of Fiji — Supabase Storage setup
 -- Run this in the SQL editor AFTER schema.sql, which defines
 -- the public.is_admin() function these policies depend on.
 --

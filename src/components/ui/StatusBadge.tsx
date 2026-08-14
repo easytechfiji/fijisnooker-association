@@ -1,9 +1,15 @@
 import type { TournamentStatus } from '../../lib/database.types.ts'
 
 const STYLES: Record<TournamentStatus, string> = {
-  upcoming: 'bg-brass-300/30 text-brass-600 ring-brass-400/40',
-  ongoing: 'bg-baize-100 text-baize-700 ring-baize-400/40',
+  upcoming: 'bg-brass-100 text-brass-700 ring-brass-400/50',
+  ongoing: 'bg-baize-50 text-baize-700 ring-baize-400/50',
   completed: 'bg-stone-100 text-stone-600 ring-stone-300',
+}
+
+const DOTS: Record<TournamentStatus, string> = {
+  upcoming: 'bg-brass-500',
+  ongoing: 'bg-baize-500',
+  completed: 'bg-stone-400',
 }
 
 const LABELS: Record<TournamentStatus, string> = {
@@ -19,12 +25,19 @@ export function StatusBadge({ status }: { status: TournamentStatus }) {
    * render `undefined` if the two ever drift apart.
    */
   const style = STYLES[status] ?? STYLES.upcoming
+  const dot = DOTS[status] ?? DOTS.upcoming
   const label = LABELS[status] ?? status
 
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${style}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide ring-1 ring-inset ${style}`}
     >
+      <span
+        aria-hidden="true"
+        className={`size-1.5 rounded-full ${dot} ${
+          status === 'ongoing' ? 'animate-pulse' : ''
+        }`}
+      />
       {label}
     </span>
   )

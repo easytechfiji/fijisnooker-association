@@ -29,7 +29,7 @@ export function TournamentsPage() {
     <>
       <PageHeader
         title="Tournaments"
-        description="Every competition run by the Southern Division, past and upcoming."
+        description="Every competition run by the association, past and upcoming."
       />
 
       <QueryBoundary loading={loading} error={error} data={data}>
@@ -51,12 +51,18 @@ export function TournamentsPage() {
 
                 return (
                   <section key={status}>
-                    <h2 className="mb-4 text-xl">{heading}</h2>
+                    <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+                      <span className="rule" aria-hidden="true" />
+                      {heading}
+                      <span className="text-sm font-normal text-stone-400 tabular-nums">
+                        {group.length}
+                      </span>
+                    </h2>
                     <div className="grid gap-4 sm:grid-cols-2">
                       {ordered.map((tournament) => (
                         <CardLink key={tournament.id} to={`/tournaments/${tournament.id}`}>
                           <div className="flex items-start justify-between gap-3">
-                            <h3 className="text-lg">{tournament.name}</h3>
+                            <h3 className="text-lg leading-snug">{tournament.name}</h3>
                             <StatusBadge status={tournament.status} />
                           </div>
                           <dl className="mt-3 space-y-1 text-sm text-stone-600">

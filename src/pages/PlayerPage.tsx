@@ -87,9 +87,11 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
-      <dt className="text-xs tracking-wide text-stone-500 uppercase">{label}</dt>
-      <dd className="mt-0.5 text-2xl text-baize-800 tabular-nums">{value}</dd>
+    <div className="rounded-xl bg-white px-4 py-3.5 shadow-sm ring-1 ring-stone-200/80">
+      <dt className="eyebrow text-stone-500">{label}</dt>
+      <dd className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold text-baize-800 tabular-nums">
+        {value}
+      </dd>
     </div>
   )
 }
@@ -114,10 +116,7 @@ export function PlayerPage() {
       <div className="mx-auto max-w-2xl">
         <EmptyState message="That player could not be found." />
         <p className="mt-4 text-center">
-          <Link
-            to="/players"
-            className="text-baize-700 underline underline-offset-2 hover:text-baize-500"
-          >
+          <Link to="/players" className="link">
             All players
           </Link>
         </p>
@@ -134,16 +133,18 @@ export function PlayerPage() {
     <>
       <Link
         to="/players"
-        className="text-sm text-baize-700 underline underline-offset-2 hover:text-baize-500"
+        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
       >
-        ← All players
+        <span aria-hidden="true">←</span> All players
       </Link>
 
-      <header className="mt-4 mb-8 flex flex-wrap items-center gap-6 border-b border-stone-200 pb-6">
-        <PlayerAvatar name={player.name} photoUrl={player.photo_url} size="lg" />
+      <header className="felt mt-4 mb-8 flex flex-wrap items-center gap-6 rounded-2xl px-6 py-8 shadow-lg shadow-baize-950/10 sm:px-8">
+        <span className="rounded-full ring-4 ring-white/15">
+          <PlayerAvatar name={player.name} photoUrl={player.photo_url} size="lg" />
+        </span>
         <div>
-          <h1 className="text-3xl">{player.name}</h1>
-          <p className="mt-1 text-stone-600">
+          <h1 className="text-3xl text-white sm:text-4xl">{player.name}</h1>
+          <p className="mt-2 text-baize-100">
             {club?.name ?? 'Unaffiliated'}
             {player.age !== null ? ` · ${player.age} years old` : ''}
           </p>
@@ -169,7 +170,10 @@ export function PlayerPage() {
 
       <div className="grid gap-10 lg:grid-cols-3">
         <section className="lg:col-span-2">
-          <h2 className="mb-4 text-xl">Match history</h2>
+          <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+            <span className="rule" aria-hidden="true" />
+            Match history
+          </h2>
           {matches.length === 0 ? (
             <EmptyState message="No matches recorded for this player yet." />
           ) : (
@@ -184,14 +188,20 @@ export function PlayerPage() {
         <aside className="space-y-8">
           {player.bio ? (
             <section>
-              <h2 className="mb-4 text-xl">Profile</h2>
+              <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+                <span className="rule" aria-hidden="true" />
+                Profile
+              </h2>
               <Markdown>{player.bio}</Markdown>
             </section>
           ) : null}
 
           <section>
-            <h2 className="mb-4 text-xl">Frames</h2>
-            <dl className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm">
+            <h2 className="mb-5 flex items-center gap-3 border-b border-stone-200 pb-3 text-xl">
+              <span className="rule" aria-hidden="true" />
+              Frames
+            </h2>
+            <dl className="rounded-xl bg-white px-4 py-3 text-sm shadow-sm ring-1 ring-stone-200/80">
               <div className="flex justify-between py-1">
                 <dt className="text-stone-500">Won</dt>
                 <dd className="tabular-nums">{standing.framesFor}</dd>

@@ -4,44 +4,62 @@ import { supabase } from '../lib/supabase.ts'
 import { useSupabaseQuery } from '../hooks/useSupabaseQuery.ts'
 import type { QueryResult } from '../hooks/useSupabaseQuery.ts'
 import { excerpt, formatDate, formatDateRange, todayInFiji } from '../lib/format.ts'
+import { ASSOCIATION_NAME, TAGLINE } from '../lib/brand.ts'
 import type { AssociationEvent, NewsPost, Tournament } from '../lib/database.types.ts'
 
 import { QueryBoundary } from '../components/ui/QueryBoundary.tsx'
 import { Card, CardLink, SectionHeading } from '../components/ui/Card.tsx'
 import { StatusBadge } from '../components/ui/StatusBadge.tsx'
 import { EmptyState } from '../components/ui/EmptyState.tsx'
+import { Logo } from '../components/Logo.tsx'
 
 interface HomeData {
   posts: NewsPost[]
   tournaments: Tournament[]
   events: AssociationEvent[]
+  counts: { players: number; tournaments: number; matches: number }
 }
 
 async function loadHome(): Promise<QueryResult<HomeData>> {
   const today = todayInFiji()
 
-  const [posts, tournaments, events] = await Promise.all([
-    supabase
-      .from('news_posts')
-      .select('*')
-      .lte('published_at', new Date().toISOString())
-      .order('published_at', { ascending: false })
-      .limit(6),
-    supabase
-      .from('tournaments')
-      .select('*')
-      .in('status', ['upcoming', 'ongoing'])
-      .order('start_date', { ascending: true })
-      .limit(4),
-    supabase
-      .from('events')
-      .select('*')
-      .gte('event_date', today)
-      .order('event_date', { ascending: true })
-      .limit(5),
-  ])
+  /*
+   * The three `head: true` queries return a count and no rows, so the totals
+   * strip costs three cheap round trips rather than pulling every player and
+   * match down the wire just to call `.length` on them.
+   */
+  const [posts, tournaments, events, playerCount, tournamentCount, matchCount] =
+    await Promise.all([
+      supabase
+        .from('news_posts')
+        .select('*')
+        .lte('published_at', new Date().toISOString())
+        .order('published_at', { ascending: false })
+        .limit(6),
+      supabase
+        .from('tournaments')
+        .select('*')
+        .in('status', ['upcoming', 'ongoing'])
+        .order('start_date', { ascending: true })
+        .limit(4),
+      supabase
+        .from('events')
+        .select('*')
+        .gte('event_date', today)
+        .order('event_date', { ascending: true })
+        .limit(5),
+      supabase.from('players').select('*', { count: 'exact', head: true }),
+      supabase.from('tournaments').select('*', { count: 'exact', head: true }),
+      supabase.from('matches').select('*', { count: 'exact', head: true }),
+    ])
 
-  const failure = posts.error ?? tournaments.error ?? events.error
+  const failure =
+    posts.error ??
+    tournaments.error ??
+    events.error ??
+    playerCount.error ??
+    tournamentCount.error ??
+    matchCount.error
   if (failure) return { data: null, error: failure }
 
   return {
@@ -49,9 +67,109 @@ async function loadHome(): Promise<QueryResult<HomeData>> {
       posts: posts.data ?? [],
       tournaments: tournaments.data ?? [],
       events: events.data ?? [],
+      counts: {
+        players: playerCount.count ?? 0,
+        tournaments: tournamentCount.count ?? 0,
+        matches: matchCount.count ?? 0,
+      },
     } satisfies HomeData,
     error: null,
   }
+}
+
+function Hero() {
+  return (
+    <section className="felt relative mb-10 overflow-hidden rounded-2xl px-6 py-12 text-baize-50 shadow-xl shadow-baize-950/10 ring-1 ring-white/10 ring-inset sm:px-10 sm:py-16">
+      {/* The badge, oversized and faded, as the hero's texture. */}
+      <Logo
+        className="pointer-events-none absolute -right-10 -bottom-16 size-64 opacity-10 mix-blend-luminosity select-none sm:size-80"
+      />
+
+      <div className="relative max-w-2xl">
+        <h1 className="text-3xl text-white sm:text-5xl sm:leading-[1.1]">
+          {ASSOCIATION_NAME}
+        </h1>
+        <p className="mt-5 text-base leading-relaxed text-baize-100 sm:text-lg">
+          {TAGLINE} Tournament results, player profiles, rankings and fixtures —
+          from club nights to the national championship, right across Fiji.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            to="/tournaments"
+            className="rounded-lg bg-brass-400 px-5 py-2.5 text-sm font-semibold text-baize-950 shadow-sm transition-colors hover:bg-brass-300"
+          >
+            Tournaments
+          </Link>
+          <Link
+            to="/rankings"
+            className="rounded-lg px-5 py-2.5 text-sm font-semibold text-white ring-1 ring-white/30 ring-inset transition-colors hover:bg-white/10"
+          >
+            Rankings
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Totals({ counts }: { counts: HomeData['counts'] }) {
+  const stats = [
+    { label: 'Registered players', value: counts.players, to: '/players' },
+    { label: 'Tournaments', value: counts.tournaments, to: '/tournaments' },
+    { label: 'Matches recorded', value: counts.matches, to: '/rankings' },
+  ]
+
+  return (
+    <dl className="mb-12 grid gap-4 sm:grid-cols-3">
+      {stats.map((stat) => (
+        <Link
+          key={stat.label}
+          to={stat.to}
+          className="rounded-xl bg-white px-5 py-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-baize-950/5 hover:ring-baize-300"
+        >
+          <dt className="eyebrow text-stone-500">{stat.label}</dt>
+          <dd className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold text-baize-800 tabular-nums">
+            {stat.value}
+          </dd>
+        </Link>
+      ))}
+    </dl>
+  )
+}
+
+/** The most recent post, given the full width of the column. */
+function FeaturedPost({ post }: { post: NewsPost }) {
+  return (
+    <CardLink to={`/news/${post.slug}`} className="!p-0 overflow-hidden">
+      {post.cover_image_url ? (
+        <img
+          src={post.cover_image_url}
+          alt=""
+          className="h-52 w-full bg-stone-100 object-cover sm:h-64"
+        />
+      ) : (
+        <div className="felt h-32 w-full" aria-hidden="true" />
+      )}
+      <div className="p-6">
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-brass-100 px-2 py-0.5 text-xs font-semibold text-brass-700">
+            Latest
+          </span>
+          <time
+            dateTime={post.published_at}
+            className="text-xs tracking-wide text-stone-500 uppercase"
+          >
+            {formatDate(post.published_at)}
+          </time>
+        </div>
+        <h3 className="mt-3 text-2xl">{post.title}</h3>
+        <p className="mt-2 text-stone-600">{excerpt(post.body, 220)}</p>
+        <p className="mt-4 text-sm font-medium text-baize-600">
+          Read the full report <span aria-hidden="true">→</span>
+        </p>
+      </div>
+    </CardLink>
+  )
 }
 
 export function HomePage() {
@@ -59,135 +177,136 @@ export function HomePage() {
 
   return (
     <>
-      <section className="mb-10 rounded-xl bg-baize-800 px-6 py-10 text-baize-50 sm:px-10 sm:py-14">
-        <p className="text-xs font-semibold tracking-widest text-brass-300 uppercase">
-          Southern Division
-        </p>
-        <h1 className="mt-2 max-w-2xl text-3xl text-white sm:text-4xl">
-          Fiji Billiards &amp; Snooker Association
-        </h1>
-        <p className="mt-4 max-w-2xl text-baize-100">
-          Tournament results, player profiles, rankings and fixtures for the
-          Southern Division — Suva, Nausori and the surrounding clubs.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            to="/tournaments"
-            className="rounded-md bg-brass-400 px-4 py-2 text-sm font-semibold text-baize-950 hover:bg-brass-300"
-          >
-            Tournaments
-          </Link>
-          <Link
-            to="/rankings"
-            className="rounded-md ring-1 ring-baize-300/50 ring-inset px-4 py-2 text-sm font-semibold text-baize-50 hover:bg-baize-700"
-          >
-            Rankings
-          </Link>
-        </div>
-      </section>
+      <Hero />
 
       <QueryBoundary loading={loading} error={error} data={data}>
-        {({ posts, tournaments, events }) => (
-          <div className="grid gap-10 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <SectionHeading title="Latest news" />
-              {posts.length === 0 ? (
-                <EmptyState message="No news posts yet. Once posts are added in the admin panel they appear here." />
-              ) : (
-                <div className="space-y-4">
-                  {posts.map((post) => (
-                    <CardLink key={post.id} to={`/news/${post.slug}`}>
-                      <article className="flex gap-4">
-                        {post.cover_image_url ? (
-                          <img
-                            src={post.cover_image_url}
-                            alt=""
-                            loading="lazy"
-                            className="hidden size-24 shrink-0 rounded-md bg-stone-100 object-cover sm:block"
-                          />
-                        ) : null}
-                        <div className="min-w-0">
-                          <time
-                            dateTime={post.published_at}
-                            className="text-xs tracking-wide text-stone-500 uppercase"
-                          >
-                            {formatDate(post.published_at)}
-                          </time>
-                          <h3 className="mt-1 text-lg">{post.title}</h3>
-                          <p className="mt-1 text-sm text-stone-600">
-                            {excerpt(post.body)}
-                          </p>
-                        </div>
-                      </article>
-                    </CardLink>
-                  ))}
-                </div>
-              )}
-            </div>
+        {({ posts, tournaments, events, counts }) => {
+          const [featured, ...rest] = posts
 
-            <aside className="space-y-10">
-              <section>
-                <SectionHeading
-                  title="Tournaments"
-                  action={{ to: '/tournaments', label: 'All' }}
-                />
-                {tournaments.length === 0 ? (
-                  <EmptyState message="Nothing scheduled right now." />
-                ) : (
-                  <div className="space-y-3">
-                    {tournaments.map((tournament) => (
-                      <CardLink
-                        key={tournament.id}
-                        to={`/tournaments/${tournament.id}`}
-                        className="!p-4"
-                      >
-                        <StatusBadge status={tournament.status} />
-                        <h3 className="mt-2 text-base">{tournament.name}</h3>
-                        <p className="mt-1 text-sm text-stone-600">
-                          {formatDateRange(tournament.start_date, tournament.end_date)}
-                        </p>
-                        {tournament.venue ? (
-                          <p className="text-sm text-stone-500">{tournament.venue}</p>
-                        ) : null}
-                      </CardLink>
-                    ))}
-                  </div>
-                )}
-              </section>
+          return (
+            <>
+              <Totals counts={counts} />
 
-              <section>
-                <SectionHeading
-                  title="Coming up"
-                  action={{ to: '/calendar', label: 'Calendar' }}
-                />
-                {events.length === 0 ? (
-                  <EmptyState message="No upcoming events." />
-                ) : (
-                  <Card className="!p-0">
-                    <ul className="divide-y divide-stone-100">
-                      {events.map((event) => (
-                        <li key={event.id} className="px-4 py-3">
-                          <time
-                            dateTime={event.event_date}
-                            className="text-xs tracking-wide text-baize-700 uppercase"
-                          >
-                            {formatDate(event.event_date)}
-                          </time>
-                          <p className="text-sm font-medium text-stone-800">
-                            {event.title}
-                          </p>
-                          {event.location ? (
-                            <p className="text-sm text-stone-500">{event.location}</p>
-                          ) : null}
-                        </li>
+              <div className="grid gap-10 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                  <SectionHeading title="Latest news" />
+                  {posts.length === 0 ? (
+                    <EmptyState message="No news posts yet. Once posts are added in the admin panel they appear here." />
+                  ) : (
+                    <div className="space-y-4">
+                      <FeaturedPost post={featured} />
+
+                      {rest.map((post) => (
+                        <CardLink key={post.id} to={`/news/${post.slug}`}>
+                          <article className="flex gap-4">
+                            {post.cover_image_url ? (
+                              <img
+                                src={post.cover_image_url}
+                                alt=""
+                                loading="lazy"
+                                className="hidden size-24 shrink-0 rounded-lg bg-stone-100 object-cover sm:block"
+                              />
+                            ) : null}
+                            <div className="min-w-0">
+                              <time
+                                dateTime={post.published_at}
+                                className="text-xs tracking-wide text-stone-500 uppercase"
+                              >
+                                {formatDate(post.published_at)}
+                              </time>
+                              <h3 className="mt-1 text-lg">{post.title}</h3>
+                              <p className="mt-1 text-sm text-stone-600">
+                                {excerpt(post.body)}
+                              </p>
+                            </div>
+                          </article>
+                        </CardLink>
                       ))}
-                    </ul>
-                  </Card>
-                )}
-              </section>
-            </aside>
-          </div>
-        )}
+                    </div>
+                  )}
+                </div>
+
+                <aside className="space-y-10">
+                  <section>
+                    <SectionHeading
+                      title="Tournaments"
+                      action={{ to: '/tournaments', label: 'All' }}
+                    />
+                    {tournaments.length === 0 ? (
+                      <EmptyState message="Nothing scheduled right now." />
+                    ) : (
+                      <div className="space-y-3">
+                        {tournaments.map((tournament) => (
+                          <CardLink
+                            key={tournament.id}
+                            to={`/tournaments/${tournament.id}`}
+                            className="!p-4"
+                          >
+                            <StatusBadge status={tournament.status} />
+                            <h3 className="mt-2.5 text-base">{tournament.name}</h3>
+                            <p className="mt-1 text-sm text-stone-600">
+                              {formatDateRange(
+                                tournament.start_date,
+                                tournament.end_date,
+                              )}
+                            </p>
+                            {tournament.venue ? (
+                              <p className="text-sm text-stone-500">
+                                {tournament.venue}
+                              </p>
+                            ) : null}
+                          </CardLink>
+                        ))}
+                      </div>
+                    )}
+                  </section>
+
+                  <section>
+                    <SectionHeading
+                      title="Coming up"
+                      action={{ to: '/calendar', label: 'Calendar' }}
+                    />
+                    {events.length === 0 ? (
+                      <EmptyState message="No upcoming events." />
+                    ) : (
+                      <Card className="!p-0 overflow-hidden">
+                        <ul className="divide-y divide-stone-100">
+                          {events.map((event) => (
+                            <li
+                              key={event.id}
+                              className="flex gap-3 px-4 py-3.5 transition-colors hover:bg-stone-50"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className="mt-1 h-auto w-0.5 shrink-0 rounded-full bg-ocean-300"
+                              />
+                              <div className="min-w-0">
+                                <time
+                                  dateTime={event.event_date}
+                                  className="text-xs font-semibold tracking-wide text-ocean-600 uppercase"
+                                >
+                                  {formatDate(event.event_date)}
+                                </time>
+                                <p className="text-sm font-medium text-stone-800">
+                                  {event.title}
+                                </p>
+                                {event.location ? (
+                                  <p className="text-sm text-stone-500">
+                                    {event.location}
+                                  </p>
+                                ) : null}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </Card>
+                    )}
+                  </section>
+                </aside>
+              </div>
+            </>
+          )
+        }}
       </QueryBoundary>
     </>
   )

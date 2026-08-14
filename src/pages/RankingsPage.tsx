@@ -67,10 +67,10 @@ export function RankingsPage() {
         {({ tournaments }) => (
           <>
             {tournaments.length > 0 ? (
-              <div className="mb-6">
+              <div className="mb-6 flex flex-wrap items-center gap-3">
                 <label
                   htmlFor="ranking-scope"
-                  className="mr-3 text-sm text-stone-600"
+                  className="text-sm font-medium text-stone-600"
                 >
                   Show
                 </label>
@@ -78,7 +78,7 @@ export function RankingsPage() {
                   id="ranking-scope"
                   value={tournamentId}
                   onChange={(event) => setTournamentId(event.target.value)}
-                  className="rounded-md border border-stone-300 bg-white px-3 py-2 text-sm focus:border-baize-500 focus:outline-none"
+                  className="max-w-full rounded-lg bg-white px-3 py-2.5 text-sm shadow-sm ring-1 ring-stone-300 ring-inset transition focus:ring-2 focus:ring-baize-500 focus:outline-none"
                 >
                   <option value={ALL}>All tournaments</option>
                   {tournaments.map((tournament) => (

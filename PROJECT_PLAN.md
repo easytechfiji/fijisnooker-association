@@ -1,4 +1,4 @@
-# Fiji Southern Snooker Association — website rebuild
+# Billiards & Snooker Association of Fiji — website rebuild
 
 ## Context
 

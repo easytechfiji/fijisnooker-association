@@ -1,6 +1,6 @@
-# Fiji Southern Snooker Association
+# Billiards & Snooker Association of Fiji
 
-Website for the Fiji Southern Division Billiards & Snooker Association —
+Website for the Billiards & Snooker Association of Fiji —
 tournaments, results, rankings, players, news and a working calendar.
 
 Replaces [fijisnooker.wordpress.com](https://fijisnooker.wordpress.com/), a blog

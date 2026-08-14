@@ -1,17 +1,22 @@
 import { Link } from 'react-router-dom'
-import { PageHeader } from '../components/PageHeader.tsx'
+
+import { Logo } from '../components/Logo.tsx'
 
 export function NotFoundPage() {
   return (
-    <>
-      <PageHeader title="Page not found" />
-      <p className="text-stone-600">
-        That page does not exist.{' '}
-        <Link to="/" className="text-baize-700 underline underline-offset-2">
-          Back to the home page
-        </Link>
-        .
+    <div className="mx-auto max-w-md py-12 text-center">
+      <Logo className="mx-auto size-20 opacity-60" />
+      <h1 className="mt-8 text-3xl">Page not found</h1>
+      <p className="mt-4 text-stone-600">
+        That page does not exist. It may have been moved, or the link may be
+        wrong.
       </p>
-    </>
+      <Link
+        to="/"
+        className="mt-8 inline-block rounded-lg bg-baize-800 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-baize-700"
+      >
+        Back to the home page
+      </Link>
+    </div>
   )
 }
