@@ -40,7 +40,7 @@ export default function RequireAdmin() {
         <button
           type="button"
           onClick={() => void signOut()}
-          className="rounded bg-baize-700 px-4 py-2 text-sm font-medium text-white hover:bg-baize-600"
+          className="rounded bg-crimson-700 px-4 py-2 text-sm font-medium text-white hover:bg-crimson-600"
         >
           Sign out
         </button>

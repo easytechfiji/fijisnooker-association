@@ -1,40 +1,26 @@
 <!--
-  Simplified version of the association badge, drawn as vectors so it stays
-  legible at 16px where the photographic logo (public/logo.jpg) turns to mush.
-  Same four elements, same colours: the sun, the sea, the table, the palm.
+  The association badge reduced to what still reads at 16px: the laurel wreath
+  as two crescents open at the top and bottom, the crimson disc, the crossed
+  cues, and three of the balls. Colours are sampled from public/logo.png.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Billiards & Snooker Association of Fiji">
-  <defs>
-    <clipPath id="disc">
-      <circle cx="32" cy="32" r="26" />
-    </clipPath>
-  </defs>
-
-  <circle cx="32" cy="32" r="32" fill="#0b3826" />
-  <circle cx="32" cy="32" r="26" fill="#fbf8f0" />
-
-  <g clip-path="url(#disc)">
-    <!-- Sun -->
-    <circle cx="32" cy="28" r="21" fill="#f0c419" />
-
-    <!-- Sea -->
-    <path d="M6 44c5 0 5-3 10-3s5 3 10 3 5-3 10-3 5 3 10 3 5-3 10-3v20H6Z" fill="#2aa7cf" />
-
-    <!-- Table -->
-    <rect x="15" y="35" width="25" height="4.5" rx="1" fill="#141414" />
-    <rect x="17.5" y="39.5" width="2.5" height="7" fill="#141414" />
-    <rect x="35" y="39.5" width="2.5" height="7" fill="#141414" />
-
-    <!-- Palm -->
-    <path d="M45.6 22.5 44 47h3l1.4-24.5Z" fill="#1a7a3c" />
-    <g fill="#1a7a3c">
-      <path d="M46 21c-4.4-2.6-9-2-11.4 1.4 3-1.4 6.2-1 8.6.8Z" />
-      <path d="M46 21c-2-4.7-6-7-10-6 3.2.6 6 3 7.6 6.6Z" />
-      <path d="M46 21c4.6-2.2 9.2-1.2 11.4 2.4-2.8-1.8-6.2-1.8-8.8-.2Z" />
-      <path d="M46 21c1.4-4.9 5-7.7 9.2-7.2-3.2 1-5.8 3.6-6.8 7.4Z" />
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Southern Division Billiards and Snooker Association Fiji">
+  <g fill="#00a551">
+    <!-- Right half of the wreath -->
+    <path d="M37.56 0.5A32 32 0 0 1 37.56 63.5L36.86 58.4A27 27 0 0 0 36.86 5.6Z" />
+    <!-- Left half -->
+    <path d="M26.44 63.5A32 32 0 0 1 26.44 0.5L27.14 5.6A27 27 0 0 0 27.14 58.4Z" />
   </g>
 
-  <circle cx="32" cy="32" r="26" fill="none" stroke="#0b3826" stroke-width="2.5" />
-  <circle cx="32" cy="32" r="30" fill="none" stroke="#f0c419" stroke-width="1.5" />
+  <circle cx="32" cy="32" r="25.5" fill="#ec1f24" />
+
+  <!-- Crossed cues -->
+  <g stroke="#e8d7a6" stroke-width="2.2" stroke-linecap="round">
+    <path d="M23 45 41 17" />
+    <path d="M41 45 23 17" />
+  </g>
+
+  <!-- Yellow, black and white off the ball cluster -->
+  <circle cx="19.5" cy="30" r="5.5" fill="#fff100" />
+  <circle cx="44.5" cy="30" r="5.5" fill="#211f20" />
+  <circle cx="32" cy="46" r="5.5" fill="#ffffff" />
 </svg>

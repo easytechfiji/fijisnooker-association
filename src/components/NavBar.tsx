@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
-import { WORDMARK } from '../lib/brand.ts'
+import { ASSOCIATION_NAME, WORDMARK } from '../lib/brand.ts'
 import { Logo } from './Logo.tsx'
 
 const links = [
@@ -26,7 +26,7 @@ function linkClass({ isActive }: { isActive: boolean }) {
     'after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:rounded-full after:transition-colors',
     isActive
       ? 'text-white after:bg-brass-400'
-      : 'text-baize-100 hover:text-white hover:after:bg-brass-400/40',
+      : 'text-crimson-50 hover:text-white hover:after:bg-brass-400/40',
   ].join(' ')
 }
 
@@ -39,8 +39,8 @@ function mobileLinkClass({ isActive }: { isActive: boolean }) {
   return [
     'block rounded-md border-l-2 px-3 py-2.5 text-sm font-medium transition-colors',
     isActive
-      ? 'border-brass-400 bg-baize-800 text-white'
-      : 'border-transparent text-baize-100 hover:border-brass-400/50 hover:bg-baize-800/60 hover:text-white',
+      ? 'border-brass-400 bg-crimson-800 text-white'
+      : 'border-transparent text-crimson-50 hover:border-brass-400/50 hover:bg-crimson-800/60 hover:text-white',
   ].join(' ')
 }
 
@@ -54,22 +54,27 @@ export function NavBar() {
   }, [pathname])
 
   return (
-    <header className="sticky top-0 z-50 shadow-lg shadow-baize-950/10">
-      {/* Badge colours, in order: palm, sun, sea. */}
-      <div className="h-1 bg-gradient-to-r from-baize-500 via-brass-400 to-ocean-400" />
+    <header className="sticky top-0 z-50 shadow-lg shadow-crimson-950/10">
+      {/* The wreath as a hairline: green edges, gold centre. */}
+      <div className="wreath-rule" />
 
-      <div className="felt text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div className="crest text-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6">
           <Link
             to="/"
+            aria-label={ASSOCIATION_NAME}
             className="flex items-center gap-3 rounded-md py-1 transition-opacity hover:opacity-90"
           >
-            <Logo className="size-11 shrink-0 shadow-sm sm:size-12" />
+            <Logo className="w-14 shrink-0 sm:w-16" />
             <span className="leading-none">
-              <span className="block font-[family-name:var(--font-display)] text-base font-bold tracking-tight text-white sm:text-lg">
+              <span className="block font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.06em] text-white sm:text-xl">
                 {WORDMARK.primary}
               </span>
-              <span className="eyebrow mt-1 block text-brass-300">
+              {/*
+                The full name is too wide for a phone alongside the menu
+                button — below `sm` the badge and the initials carry it.
+              */}
+              <span className="eyebrow mt-1.5 hidden text-[0.6875rem] text-brass-300 sm:block">
                 {WORDMARK.secondary}
               </span>
             </span>
@@ -85,7 +90,7 @@ export function NavBar() {
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-baize-50 ring-1 ring-white/20 ring-inset transition-colors hover:bg-baize-800 lg:hidden"
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-crimson-50 ring-1 ring-white/20 ring-inset transition-colors hover:bg-crimson-800 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((wasOpen) => !wasOpen)}

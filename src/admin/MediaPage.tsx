@@ -167,7 +167,7 @@ export default function AdminMediaPage() {
     >
       <Flash message={flash} />
 
-      <section className="mb-8 rounded-lg border border-baize-200 bg-white p-6 shadow-sm">
+      <section className="mb-8 rounded-lg border border-crimson-200 bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-lg">Upload an image</h2>
 
         <div className="space-y-4">
@@ -187,7 +187,7 @@ export default function AdminMediaPage() {
               type="file"
               accept={ACCEPT}
               onChange={(event) => chooseFile(event.target.files?.[0] ?? null)}
-              className="block w-full text-sm text-stone-600 file:mr-3 file:rounded-md file:border-0 file:bg-baize-700 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-baize-600"
+              className="block w-full text-sm text-stone-600 file:mr-3 file:rounded-md file:border-0 file:bg-crimson-700 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-crimson-600"
             />
             <p className="mt-1 text-xs text-stone-500">
               JPEG, PNG, WebP or GIF, up to {formatBytes(MAX_UPLOAD_BYTES)}. The same
@@ -289,7 +289,7 @@ export default function AdminMediaPage() {
                       href={item.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs text-baize-700 underline underline-offset-2 hover:text-baize-500"
+                      className="text-xs text-crimson-700 underline underline-offset-2 hover:text-crimson-500"
                     >
                       Open URL
                     </a>

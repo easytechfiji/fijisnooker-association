@@ -22,11 +22,11 @@ function MemberCard({ member }: { member: CommitteeMember }) {
   const period = term(member)
 
   return (
-    <li className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:shadow-md hover:ring-baize-300">
+    <li className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:shadow-md hover:ring-crimson-300">
       <div className="flex items-start gap-4">
         <span
           aria-hidden="true"
-          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-baize-50 text-sm font-bold text-baize-700 ring-1 ring-baize-200"
+          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-crimson-50 text-sm font-bold text-crimson-700 ring-1 ring-crimson-200"
         >
           {initials(member.name)}
         </span>

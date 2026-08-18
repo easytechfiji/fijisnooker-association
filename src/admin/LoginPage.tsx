@@ -38,9 +38,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="felt flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl shadow-baize-950/30">
-        <Logo className="mx-auto size-16" />
+    <main className="crest flex min-h-screen items-center justify-center px-4 py-10">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl shadow-crimson-950/30">
+        <Logo className="mx-auto w-24" />
         <h1 className="mt-5 text-center text-2xl">Committee login</h1>
         <p className="mt-2 mb-6 text-center text-sm text-stone-600">
           {ASSOCIATION_NAME} administration.
@@ -58,7 +58,7 @@ export default function LoginPage() {
               autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded border border-stone-300 px-3 py-2 focus:border-baize-500"
+              className="w-full rounded border border-stone-300 px-3 py-2 focus:border-crimson-500"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function LoginPage() {
               autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded border border-stone-300 px-3 py-2 focus:border-baize-500"
+              className="w-full rounded border border-stone-300 px-3 py-2 focus:border-crimson-500"
             />
           </div>
 
@@ -82,14 +82,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded bg-baize-700 px-4 py-2 font-medium text-white hover:bg-baize-600 disabled:opacity-60"
+            className="w-full rounded bg-crimson-700 px-4 py-2 font-medium text-white hover:bg-crimson-600 disabled:opacity-60"
           >
             {submitting ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm">
-          <Link to="/" className="text-stone-500 hover:text-baize-700">
+          <Link to="/" className="text-stone-500 hover:text-crimson-700">
             Back to the site
           </Link>
         </p>

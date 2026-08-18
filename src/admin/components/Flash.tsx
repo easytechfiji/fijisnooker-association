@@ -12,7 +12,7 @@ export function Flash({ message }: { message: string | null }) {
   return (
     <p
       role="status"
-      className="mb-6 rounded-md border border-baize-200 bg-baize-50 px-4 py-2.5 text-sm text-baize-800"
+      className="mb-6 rounded-md border border-laurel-200 bg-laurel-50 px-4 py-2.5 text-sm text-laurel-800"
     >
       {message}
     </p>

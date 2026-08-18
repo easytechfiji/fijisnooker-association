@@ -75,10 +75,14 @@ export function AdminTable<T extends { id: string }>({
                 </td>
               ))}
               <td className="px-4 py-2.5 text-right whitespace-nowrap">
+                {/*
+                  Green rather than the brand crimson: this button sits inches
+                  from Delete, and two reds side by side is one misclick.
+                */}
                 <button
                   type="button"
                   onClick={() => onEdit(row)}
-                  className="rounded px-2 py-1 text-sm text-baize-700 hover:bg-baize-50 hover:underline"
+                  className="rounded px-2 py-1 text-sm text-laurel-700 hover:bg-laurel-50 hover:underline"
                 >
                   Edit
                 </button>

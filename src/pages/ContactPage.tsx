@@ -56,7 +56,7 @@ export function ContactPage() {
                       className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-3.5"
                     >
                       <div>
-                        <p className="font-semibold text-baize-800">{member.role}</p>
+                        <p className="font-semibold text-crimson-800">{member.role}</p>
                         <p className="text-sm text-stone-500">{member.name}</p>
                       </div>
                       <div className="text-sm">
@@ -71,7 +71,7 @@ export function ContactPage() {
                           <p className="text-stone-600">
                             <a
                               href={`tel:${member.contact_phone.replace(/\s+/g, '')}`}
-                              className="hover:text-baize-700"
+                              className="hover:text-crimson-700"
                             >
                               {member.contact_phone}
                             </a>

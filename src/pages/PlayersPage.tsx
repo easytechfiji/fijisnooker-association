@@ -95,7 +95,7 @@ export function PlayersPage() {
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Search by name or club"
-                    className="w-full rounded-lg bg-white py-2.5 pr-3 pl-9 text-sm shadow-sm ring-1 ring-stone-300 ring-inset transition placeholder:text-stone-400 focus:ring-2 focus:ring-baize-500 focus:outline-none"
+                    className="w-full rounded-lg bg-white py-2.5 pr-3 pl-9 text-sm shadow-sm ring-1 ring-stone-300 ring-inset transition placeholder:text-stone-400 focus:ring-2 focus:ring-crimson-500 focus:outline-none"
                   />
                 </div>
                 <p className="text-sm text-stone-500 tabular-nums">
@@ -113,7 +113,7 @@ export function PlayersPage() {
                       <li key={player.id}>
                         <Link
                           to={`/players/${player.id}`}
-                          className="flex h-full gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-baize-950/5 hover:ring-baize-300"
+                          className="flex h-full gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-crimson-950/5 hover:ring-crimson-300"
                         >
                           <PlayerAvatar
                             name={player.name}

@@ -111,7 +111,7 @@ export function CalendarPage() {
                 type="button"
                 onClick={() => goToMonth(-1)}
                 aria-label="Previous month"
-                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-baize-700 hover:ring-baize-400"
+                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-crimson-700 hover:ring-crimson-400"
               >
                 <span aria-hidden="true">←</span>
                 <span className="ml-1.5 hidden sm:inline">Previous</span>
@@ -121,7 +121,7 @@ export function CalendarPage() {
                 type="button"
                 onClick={() => goToMonth(1)}
                 aria-label="Next month"
-                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-baize-700 hover:ring-baize-400"
+                className="rounded-lg bg-white px-3 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-300 ring-inset transition hover:text-crimson-700 hover:ring-crimson-400"
               >
                 <span className="mr-1.5 hidden sm:inline">Next</span>
                 <span aria-hidden="true">→</span>
@@ -157,7 +157,7 @@ export function CalendarPage() {
                               <span
                                 className={`inline-flex size-6 items-center justify-center rounded-full text-xs tabular-nums ${
                                   isToday
-                                    ? 'bg-baize-600 font-bold text-white'
+                                    ? 'bg-crimson-600 font-bold text-white'
                                     : 'text-stone-500'
                                 }`}
                               >
@@ -167,8 +167,8 @@ export function CalendarPage() {
                                 {entries.map((entry) => {
                                   const classes = `block truncate rounded px-1.5 py-0.5 text-[11px] leading-tight font-medium ${
                                     entry.kind === 'tournament'
-                                      ? 'bg-baize-100 text-baize-800'
-                                      : 'bg-ocean-100 text-ocean-600'
+                                      ? 'bg-crimson-100 text-crimson-800'
+                                      : 'bg-laurel-100 text-laurel-800'
                                   }`
                                   return (
                                     <li key={entry.key}>
@@ -199,11 +199,11 @@ export function CalendarPage() {
 
                 <div className="mt-4 flex gap-5 text-xs text-stone-500">
                   <span className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-sm bg-baize-100 ring-1 ring-baize-300" />{' '}
+                    <span className="size-3 rounded-sm bg-crimson-100 ring-1 ring-crimson-300" />{' '}
                     Tournament
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-sm bg-ocean-100 ring-1 ring-ocean-300" />{' '}
+                    <span className="size-3 rounded-sm bg-laurel-100 ring-1 ring-laurel-300" />{' '}
                     Event
                   </span>
                   <span className="flex items-center gap-1.5">
@@ -257,7 +257,7 @@ export function CalendarPage() {
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <Link
                             to={`/tournaments/${tournament.id}`}
-                            className="font-medium text-stone-800 hover:text-baize-700 hover:underline"
+                            className="font-medium text-stone-800 hover:text-crimson-700 hover:underline"
                           >
                             {tournament.name}
                           </Link>

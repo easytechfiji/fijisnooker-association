@@ -23,7 +23,7 @@ function Side({
 }) {
   const player = playerId ? players.get(playerId) : undefined
   const classes = `min-w-0 truncate ${align === 'right' ? 'text-right' : ''} ${
-    isWinner ? 'font-semibold text-baize-800' : 'text-stone-700'
+    isWinner ? 'font-semibold text-crimson-800' : 'text-stone-700'
   }`
 
   if (!playerId) return <span className={`${classes} text-stone-400`}>TBC</span>
@@ -71,7 +71,7 @@ export function MatchList({
                 <span
                   className={`rounded-md px-2.5 py-1 text-sm font-bold tabular-nums ${
                     scored
-                      ? 'bg-baize-50 text-baize-800 ring-1 ring-baize-200 ring-inset'
+                      ? 'bg-crimson-50 text-crimson-800 ring-1 ring-crimson-200 ring-inset'
                       : 'text-stone-400'
                   }`}
                 >

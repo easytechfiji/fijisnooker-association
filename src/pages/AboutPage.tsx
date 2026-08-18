@@ -11,13 +11,17 @@ import { EmptyState } from '../components/ui/EmptyState.tsx'
 import { Card } from '../components/ui/Card.tsx'
 import { Logo } from '../components/Logo.tsx'
 
-/* One ball colour per section, so the four cards read as a set. */
+/*
+ * One ball colour per section, so the four cards read as a set. Taken off the
+ * badge's own cluster — the blue is a literal hex because it is the one ball
+ * colour the palette has no use for anywhere else.
+ */
 const SECTIONS = [
   {
     to: '/tournaments',
     label: 'Tournaments',
     description: 'Every competition with its dates, venue, format and results.',
-    dot: 'bg-[#c8102e]',
+    dot: 'bg-crimson-500',
   },
   {
     to: '/players',
@@ -29,13 +33,13 @@ const SECTIONS = [
     to: '/rankings',
     label: 'Rankings',
     description: 'Standings calculated from recorded results.',
-    dot: 'bg-baize-500',
+    dot: 'bg-laurel-500',
   },
   {
     to: '/calendar',
     label: 'Calendar',
     description: 'Fixtures, meetings and tournament dates.',
-    dot: 'bg-ocean-400',
+    dot: 'bg-[#2d3192]',
   },
 ]
 
@@ -49,18 +53,18 @@ export function AboutPage() {
     <>
       <PageHeader title="About the association" />
 
-      {/* A tinted band so the page opens with colour rather than body copy. */}
       {/*
-        Green through to sea blue rather than the badge's gold — the page
-        behind it is already warm, and a gold panel on parchment disappears.
+        A tinted band so the page opens with colour rather than body copy: the
+        badge read left to right, disc red washing through to wreath green.
       */}
-      <section className="relative mb-10 overflow-hidden rounded-2xl bg-gradient-to-br from-baize-100 via-baize-50 to-ocean-200/80 px-6 py-10 ring-1 ring-baize-300/70 sm:px-10">
-        <Logo className="pointer-events-none absolute -right-8 -bottom-10 size-48 opacity-[0.07] select-none sm:size-56" />
+      <section className="relative mb-10 overflow-hidden rounded-2xl bg-gradient-to-br from-crimson-100 via-brass-100/70 to-laurel-100 px-6 py-10 ring-1 ring-crimson-200/80 sm:px-10">
+        <Logo className="pointer-events-none absolute -right-10 -bottom-12 w-52 opacity-[0.09] select-none sm:w-64" />
         <div className="relative max-w-2xl">
           <p className="text-lg leading-relaxed text-stone-700 sm:text-xl">
             The {ASSOCIATION_NAME} organises competitive billiards and snooker
-            across Fiji. It runs the tournament calendar, keeps records of
-            matches and rankings, and selects players to represent the country.
+            across the Southern Division. It runs the tournament calendar, keeps
+            records of matches and rankings, and puts players forward for
+            national selection.
           </p>
         </div>
       </section>
@@ -84,14 +88,14 @@ export function AboutPage() {
                 <li key={section.to}>
                   <Link
                     to={section.to}
-                    className="flex h-full gap-3 rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-baize-950/5 hover:ring-baize-300"
+                    className="flex h-full gap-3 rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200/80 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-crimson-950/5 hover:ring-crimson-300"
                   >
                     <span
                       aria-hidden="true"
                       className={`mt-1.5 size-2.5 shrink-0 rounded-full shadow-sm ${section.dot}`}
                     />
                     <span>
-                      <span className="font-semibold text-baize-800">
+                      <span className="font-semibold text-crimson-800">
                         {section.label} <span aria-hidden="true">→</span>
                       </span>
                       <span className="mt-1 block text-sm text-stone-600">

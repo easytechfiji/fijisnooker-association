@@ -341,7 +341,7 @@ export default function AdminMatchesPage() {
               <button
                 type="button"
                 onClick={applyScoreWinner}
-                className="mt-1.5 text-xs text-baize-700 underline underline-offset-2 hover:text-baize-500"
+                className="mt-1.5 text-xs text-crimson-700 underline underline-offset-2 hover:text-crimson-500"
               >
                 Set the winner from the scores
               </button>
@@ -379,7 +379,7 @@ export default function AdminMatchesPage() {
             id="match-filter"
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm focus:border-baize-500 focus:outline-none"
+            className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm focus:border-crimson-500 focus:outline-none"
           >
             <option value={ALL}>All tournaments</option>
             {tournaments.map((tournament) => (

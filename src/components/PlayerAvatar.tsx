@@ -33,7 +33,7 @@ export function PlayerAvatar({
   return (
     <span
       aria-hidden="true"
-      className={`${shared} flex items-center justify-center bg-baize-100 font-semibold text-baize-700`}
+      className={`${shared} flex items-center justify-center bg-crimson-100 font-semibold text-crimson-700`}
     >
       {initials(name)}
     </span>

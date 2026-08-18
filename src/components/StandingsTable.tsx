@@ -91,13 +91,13 @@ export function StandingsTable({
               <td className="px-3 py-2.5">
                 <Link
                   to={`/players/${standing.playerId}`}
-                  className="font-medium text-stone-800 hover:text-baize-700 hover:underline"
+                  className="font-medium text-stone-800 hover:text-crimson-700 hover:underline"
                 >
                   {standing.name}
                 </Link>
               </td>
               <td className="px-3 py-2 text-right tabular-nums">{standing.played}</td>
-              <td className="px-3 py-2 text-right font-semibold text-baize-700 tabular-nums">
+              <td className="px-3 py-2 text-right font-semibold text-laurel-700 tabular-nums">
                 {standing.won}
               </td>
               <td className="px-3 py-2 text-right tabular-nums">{standing.lost}</td>
@@ -114,9 +114,9 @@ export function StandingsTable({
               <td
                 className={`px-3 py-2 text-right tabular-nums ${
                   standing.frameDifference > 0
-                    ? 'text-baize-700'
+                    ? 'text-laurel-700'
                     : standing.frameDifference < 0
-                      ? 'text-red-700'
+                      ? 'text-crimson-600'
                       : 'text-stone-500'
                 }`}
               >
