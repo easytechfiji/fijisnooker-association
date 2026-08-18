@@ -1,41 +1,47 @@
 @import 'tailwindcss';
 
 /*
- * The palette is sampled from the association badge (public/logo.jpg):
- * the palm green, the sun gold, the sea blue. Token names are kept from the
- * first build so every screen — including the admin panel — picks up the new
- * colours without touching its markup.
+ * The palette is sampled straight off the association badge (public/logo.png):
+ * the crimson disc (#ec1f24), the laurel wreath (#00a551) and the yellow ball
+ * (#fff100), warmed to a gold that survives on white. Three families only —
+ * every screen, including the admin panel, is built from these.
  */
 @theme {
-  /* Palm green — the badge's ring and lettering, and the table cloth. Primary. */
-  --color-baize-50: #eef7f1;
-  --color-baize-100: #d4ecdd;
-  --color-baize-200: #a9d8bc;
-  --color-baize-300: #73bd96;
-  --color-baize-400: #41a071;
-  --color-baize-500: #1a7a3c;
-  --color-baize-600: #146434;
-  --color-baize-700: #11512d;
-  --color-baize-800: #0e4028;
-  --color-baize-900: #0b3826;
-  --color-baize-950: #052016;
+  /* Crimson — the badge disc. Primary: masthead, headings, links, footer. */
+  --color-crimson-50: #fef3f2;
+  --color-crimson-100: #fde3e2;
+  --color-crimson-200: #fbc8c8;
+  --color-crimson-300: #f79b9c;
+  --color-crimson-400: #f16467;
+  --color-crimson-500: #ec1f24;
+  --color-crimson-600: #cf1319;
+  --color-crimson-700: #a91014;
+  --color-crimson-800: #7c1417;
+  --color-crimson-900: #551215;
+  --color-crimson-950: #2f090b;
 
-  /* Sun gold — the badge's disc. Accents, highlights, the primary button. */
-  --color-brass-100: #fdf4d3;
-  --color-brass-200: #fbe8a4;
-  --color-brass-300: #f7d76b;
-  --color-brass-400: #f0c419;
-  --color-brass-500: #d9ab08;
-  --color-brass-600: #a67f06;
-  --color-brass-700: #7a5d08;
+  /* Laurel — the wreath. Secondary: fixtures, live states, the framing rules. */
+  --color-laurel-50: #edfbf2;
+  --color-laurel-100: #d1f4e0;
+  --color-laurel-200: #a3e7c0;
+  --color-laurel-300: #64d298;
+  --color-laurel-400: #22b972;
+  --color-laurel-500: #00a551;
+  --color-laurel-600: #008a45;
+  --color-laurel-700: #036e3a;
+  --color-laurel-800: #06552f;
+  --color-laurel-900: #064027;
+  --color-laurel-950: #022615;
 
-  /* Sea blue — the badge's water. Secondary accent, calendar events. */
-  --color-ocean-100: #dcf1f8;
-  --color-ocean-200: #b3e2f1;
-  --color-ocean-300: #77cde6;
-  --color-ocean-400: #2aa7cf;
-  --color-ocean-500: #1c88ac;
-  --color-ocean-600: #176d8b;
+  /* Brass — the yellow ball. Accent: buttons on dark, rules, highlights. */
+  --color-brass-100: #fff8cc;
+  --color-brass-200: #ffef94;
+  --color-brass-300: #ffe15c;
+  --color-brass-400: #fdd017;
+  --color-brass-500: #e0b100;
+  /* 600 and 700 are the two that carry text on white — dark enough to pass AA. */
+  --color-brass-600: #8f6c05;
+  --color-brass-700: #7a5c08;
 
   --font-display:
     'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Helvetica, Arial,
@@ -47,12 +53,17 @@
     @apply bg-stone-50 text-stone-700 antialiased;
   }
 
+  /*
+   * Headings are near-black rather than tinted: the badge's red is loud enough
+   * that tinting the type as well pushed every page towards maroon. Keeping the
+   * text neutral leaves the red free to work as an accent.
+   */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display);
-    @apply font-bold tracking-tight text-baize-900;
+    @apply font-bold tracking-tight text-stone-900;
   }
 
   h1 {
@@ -70,11 +81,11 @@
 
   /* Keyboard focus stays visible everywhere. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brass-500;
+    @apply outline-2 outline-offset-2 outline-crimson-600;
   }
 
   ::selection {
-    @apply bg-brass-300 text-baize-950;
+    @apply bg-brass-300 text-crimson-950;
   }
 }
 
@@ -84,56 +95,120 @@
    * near-white, so the white cards sitting on it actually read as raised —
    * on stone-50 the two were within a couple of percent of each other and the
    * whole page flattened out. Over it, three soft washes in the badge's own
-   * colours (sun, palm, sea) and a faint diagonal weave for texture.
+   * colours (disc, wreath, ball) and a faint diagonal weave for texture.
    *
    * Fixed, so scrolling does not drag the washes up the screen.
    */
   .page-bg {
-    background-color: #f4efe3;
+    background-color: #fdfbf7;
     background-image:
       repeating-linear-gradient(
         135deg,
-        rgb(11 56 38 / 0.028) 0 1px,
+        rgb(47 9 11 / 0.02) 0 1px,
         transparent 1px 7px
       ),
       radial-gradient(
         42rem 26rem at 100% -2rem,
-        rgb(240 196 25 / 0.34),
+        rgb(236 31 36 / 0.12),
         transparent 62%
       ),
       radial-gradient(
-        38rem 26rem at -8% 32%,
-        rgb(26 122 60 / 0.2),
+        38rem 26rem at -8% 30%,
+        rgb(0 165 81 / 0.13),
         transparent 62%
       ),
       radial-gradient(
         44rem 30rem at 72% 104%,
-        rgb(42 167 207 / 0.18),
+        rgb(253 208 23 / 0.16),
         transparent 62%
       );
     background-attachment: fixed;
   }
 
   /*
-   * The hero and footer share one backdrop: deep baize with the badge's sun
-   * bleeding in from the top right. Written here rather than as a stack of
-   * arbitrary Tailwind gradient utilities because two elements use it and the
-   * utility version is unreadable.
+   * The masthead and the page headers: the badge's disc red, straight up, with
+   * a gold bloom from the top right and the wreath green glowing in at the
+   * bottom left. Kept at crimson-600 rather than the badge's own #ec1f24 —
+   * white type on the pure colour lands at 4.4:1, just under AA, and this is
+   * the surface all the navigation sits on.
+   *
+   * Written here rather than as a stack of Tailwind gradient utilities because
+   * several elements use it and the utility version is unreadable.
    */
-  .felt {
-    background-color: var(--color-baize-900);
+  .crest {
+    background-color: var(--color-crimson-600);
     background-image:
       radial-gradient(
-        60rem 30rem at 85% -10%,
-        rgb(240 196 25 / 0.22),
+        52rem 28rem at 88% -18%,
+        rgb(253 208 23 / 0.18),
+        transparent 62%
+      ),
+      radial-gradient(
+        34rem 22rem at -2% 116%,
+        rgb(0 165 81 / 0.34),
+        transparent 62%
+      ),
+      linear-gradient(158deg, #e01a20, #bd141c 82%);
+  }
+
+  /* The wreath side of the badge, for the footer: red disc, green surround. */
+  .crest-green {
+    background-color: var(--color-laurel-800);
+    background-image:
+      radial-gradient(
+        50rem 26rem at 88% -20%,
+        rgb(253 208 23 / 0.3),
         transparent 60%
       ),
       radial-gradient(
-        40rem 24rem at 5% 110%,
-        rgb(42 167 207 / 0.18),
-        transparent 60%
+        34rem 22rem at 0% 118%,
+        rgb(236 31 36 / 0.28),
+        transparent 62%
       ),
-      linear-gradient(160deg, var(--color-baize-800), var(--color-baize-950));
+      linear-gradient(158deg, var(--color-laurel-700), #054727 84%);
+  }
+
+  /* A crimson outline is invisible against these — go gold in there. */
+  .crest :focus-visible,
+  .crest-green :focus-visible {
+    outline-color: var(--color-brass-400);
+  }
+
+  /*
+   * The home hero. The photograph carries the colour; the scrim only deepens
+   * the empty baize on the left so white type keeps its contrast, and clears
+   * away by the middle so the balls stay bright. Declared here rather than as
+   * an inline style because the deployed CSP forbids inline styles outright.
+   */
+  .hero-balls {
+    background-color: var(--color-laurel-800);
+    background-image:
+      linear-gradient(
+        95deg,
+        rgb(6 78 44 / 0.94) 0%,
+        rgb(6 78 44 / 0.84) 32%,
+        rgb(6 78 44 / 0.34) 60%,
+        rgb(6 78 44 / 0.06) 100%
+      ),
+      url('/hero-balls.jpg');
+    background-position: center right;
+    background-size: cover;
+  }
+
+  /* Same photograph treatment for a news post with no cover image of its own. */
+  .news-balls {
+    background-color: var(--color-laurel-700);
+    background-image: url('/news-balls.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  /*
+   * The wreath, reduced to a hairline: green edges, gold centre. Sits above
+   * the masthead and below the footer so both are framed the way the badge is.
+   */
+  .wreath-rule {
+    @apply h-1 bg-gradient-to-r from-laurel-600 via-brass-400 to-laurel-600;
   }
 
   /* Uppercase micro-label above a heading. */
@@ -141,14 +216,14 @@
     @apply text-xs font-semibold tracking-[0.14em] uppercase;
   }
 
-  /* The short gold rule that sits under section and page headings. */
+  /* The short disc-to-ball rule that sits under section and page headings. */
   .rule {
-    @apply block h-[3px] w-10 rounded-full bg-brass-400;
+    @apply block h-[3px] w-10 rounded-full bg-gradient-to-r from-crimson-500 to-brass-400;
   }
 
   /* Inline text link in body copy. */
   .link {
-    @apply font-medium text-baize-600 underline decoration-baize-300 underline-offset-2 transition-colors hover:text-baize-800 hover:decoration-brass-400;
+    @apply font-medium text-crimson-700 underline decoration-crimson-300 underline-offset-2 transition-colors hover:text-crimson-900 hover:decoration-brass-400;
   }
 }
 
@@ -184,15 +259,15 @@
 }
 
 .markdown a {
-  @apply font-medium text-baize-600 underline decoration-baize-300 underline-offset-2 hover:text-baize-800 hover:decoration-brass-400;
+  @apply font-medium text-crimson-700 underline decoration-crimson-300 underline-offset-2 hover:text-crimson-900 hover:decoration-brass-400;
 }
 
 .markdown ul {
-  @apply list-disc pl-6 marker:text-brass-400;
+  @apply list-disc pl-6 marker:text-brass-500;
 }
 
 .markdown ol {
-  @apply list-decimal pl-6 marker:text-brass-500;
+  @apply list-decimal pl-6 marker:text-crimson-500;
 }
 
 .markdown li + li {
@@ -208,7 +283,7 @@
 }
 
 .markdown pre {
-  @apply overflow-x-auto rounded-lg bg-baize-950 p-4 text-sm text-stone-100;
+  @apply overflow-x-auto rounded-lg bg-crimson-950 p-4 text-sm text-stone-100;
 }
 
 .markdown pre code {

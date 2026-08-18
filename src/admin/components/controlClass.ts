@@ -11,6 +11,6 @@ export function controlClass(hasError: boolean): string {
   return `${BASE} ${
     hasError
       ? 'border-red-400 focus:border-red-500'
-      : 'border-stone-300 focus:border-baize-500'
+      : 'border-stone-300 focus:border-crimson-500'
   }`
 }

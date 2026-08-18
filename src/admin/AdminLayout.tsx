@@ -18,7 +18,7 @@ const sections = [
 function sectionClass({ isActive }: { isActive: boolean }) {
   return [
     'block rounded px-3 py-2 text-sm',
-    isActive ? 'bg-baize-700 font-medium text-white' : 'text-stone-700 hover:bg-stone-100',
+    isActive ? 'bg-crimson-700 font-medium text-white' : 'text-stone-700 hover:bg-stone-100',
   ].join(' ')
 }
 
@@ -27,10 +27,10 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <header className="felt text-white">
+      <header className="crest text-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6">
           <Link to="/admin" className="flex items-center gap-3">
-            <Logo className="size-9 shrink-0" />
+            <Logo className="w-11 shrink-0" />
             <span className="leading-none">
               <span className="block font-[family-name:var(--font-display)] text-lg font-bold">
                 Administration
@@ -41,14 +41,14 @@ export default function AdminLayout() {
             </span>
           </Link>
           <div className="flex items-center gap-4 text-sm">
-            <span className="hidden text-baize-200 sm:inline">{user?.email}</span>
+            <span className="hidden text-crimson-50 sm:inline">{user?.email}</span>
             <Link to="/" className="hover:text-brass-300">
               View site
             </Link>
             <button
               type="button"
               onClick={() => void signOut()}
-              className="rounded bg-baize-700 px-3 py-1.5 hover:bg-baize-600"
+              className="rounded bg-crimson-700 px-3 py-1.5 hover:bg-crimson-600"
             >
               Sign out
             </button>

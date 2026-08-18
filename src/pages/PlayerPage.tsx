@@ -89,7 +89,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-xl bg-white px-4 py-3.5 shadow-sm ring-1 ring-stone-200/80">
       <dt className="eyebrow text-stone-500">{label}</dt>
-      <dd className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold text-baize-800 tabular-nums">
+      <dd className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold text-crimson-600 tabular-nums">
         {value}
       </dd>
     </div>
@@ -133,18 +133,18 @@ export function PlayerPage() {
     <>
       <Link
         to="/players"
-        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
+        className="text-sm font-medium text-crimson-600 transition-colors hover:text-crimson-800"
       >
         <span aria-hidden="true">←</span> All players
       </Link>
 
-      <header className="felt mt-4 mb-8 flex flex-wrap items-center gap-6 rounded-2xl px-6 py-8 shadow-lg shadow-baize-950/10 sm:px-8">
+      <header className="crest mt-4 mb-8 flex flex-wrap items-center gap-6 rounded-2xl px-6 py-8 shadow-lg shadow-crimson-950/10 sm:px-8">
         <span className="rounded-full ring-4 ring-white/15">
           <PlayerAvatar name={player.name} photoUrl={player.photo_url} size="lg" />
         </span>
         <div>
           <h1 className="text-3xl text-white sm:text-4xl">{player.name}</h1>
-          <p className="mt-2 text-baize-100">
+          <p className="mt-2 text-crimson-50">
             {club?.name ?? 'Unaffiliated'}
             {player.age !== null ? ` · ${player.age} years old` : ''}
           </p>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const BASE =
   'block rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200/80 transition duration-200'
 const INTERACTIVE =
-  'hover:-translate-y-0.5 hover:shadow-lg hover:shadow-baize-950/5 hover:ring-baize-300'
+  'hover:-translate-y-0.5 hover:shadow-lg hover:shadow-crimson-950/5 hover:ring-crimson-300'
 
 /** A plain content panel. */
 export function Card({
@@ -51,7 +51,7 @@ export function SectionHeading({
       {action ? (
         <Link
           to={action.to}
-          className="shrink-0 text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
+          className="shrink-0 text-sm font-medium text-crimson-600 transition-colors hover:text-crimson-800"
         >
           {action.label} <span aria-hidden="true">→</span>
         </Link>

@@ -206,7 +206,7 @@ export default function AdminCommitteePage() {
               header: 'Status',
               cell: (member) =>
                 isCurrent(member, today) ? (
-                  <span className="text-baize-700">Current</span>
+                  <span className="text-crimson-700">Current</span>
                 ) : (
                   <span className="text-stone-400">Past</span>
                 ),

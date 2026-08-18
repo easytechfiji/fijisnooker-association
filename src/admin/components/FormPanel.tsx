@@ -36,7 +36,7 @@ export function FormPanel({
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="mb-8 rounded-lg border border-baize-200 bg-white p-6 shadow-sm"
+      className="mb-8 rounded-lg border border-crimson-200 bg-white p-6 shadow-sm"
     >
       <h2 className="mb-5 text-lg">{title}</h2>
 

@@ -266,7 +266,7 @@ export default function AdminNewsPage() {
                 post.published_at > new Date().toISOString() ? (
                   <span className="text-brass-600">Scheduled</span>
                 ) : (
-                  <span className="text-baize-700">Live</span>
+                  <span className="text-crimson-700">Live</span>
                 ),
             },
           ]}

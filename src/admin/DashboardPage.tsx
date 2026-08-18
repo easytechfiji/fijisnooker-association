@@ -58,9 +58,9 @@ export default function DashboardPage() {
             <Link
               key={name}
               to={to}
-              className="rounded-lg border border-stone-200 bg-white p-4 transition hover:border-baize-300 hover:shadow-md"
+              className="rounded-lg border border-stone-200 bg-white p-4 transition hover:border-crimson-300 hover:shadow-md"
             >
-              <p className="text-3xl font-semibold text-baize-800">{data[name] ?? 0}</p>
+              <p className="text-3xl font-semibold text-crimson-600">{data[name] ?? 0}</p>
               <p className="mt-1 text-sm text-stone-600">{label}</p>
             </Link>
           ))}

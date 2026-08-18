@@ -1,5 +1,5 @@
 -- ============================================================
--- Billiards & Snooker Association of Fiji — database schema
+-- Southern Division Billiards and Snooker Association Fiji — database schema
 -- Run this in the Supabase SQL editor (Studio → SQL Editor → New query)
 -- ============================================================
 

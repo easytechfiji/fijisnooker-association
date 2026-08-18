@@ -44,7 +44,7 @@ export function NewsPostPage() {
     <article className="mx-auto max-w-3xl">
       <Link
         to="/"
-        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
+        className="text-sm font-medium text-crimson-600 transition-colors hover:text-crimson-800"
       >
         <span aria-hidden="true">←</span> All news
       </Link>

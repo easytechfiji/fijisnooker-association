@@ -107,12 +107,12 @@ export function TournamentPage() {
     <>
       <Link
         to="/tournaments"
-        className="text-sm font-medium text-baize-600 transition-colors hover:text-baize-800"
+        className="text-sm font-medium text-crimson-600 transition-colors hover:text-crimson-800"
       >
         <span aria-hidden="true">←</span> All tournaments
       </Link>
 
-      <header className="felt mt-4 mb-8 rounded-2xl px-6 py-8 shadow-lg shadow-baize-950/10 sm:px-8">
+      <header className="crest mt-4 mb-8 rounded-2xl px-6 py-8 shadow-lg shadow-crimson-950/10 sm:px-8">
         <div className="flex flex-wrap items-center gap-4">
           <h1 className="text-3xl text-white sm:text-4xl">{tournament.name}</h1>
           <StatusBadge status={tournament.status} />
@@ -120,32 +120,32 @@ export function TournamentPage() {
 
         <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 text-sm">
           <div>
-            <dt className="eyebrow text-baize-300">Dates</dt>
+            <dt className="eyebrow text-brass-300">Dates</dt>
             <dd className="mt-1 font-medium text-white">
               {formatDateRange(tournament.start_date, tournament.end_date)}
             </dd>
           </div>
           {tournament.venue ? (
             <div>
-              <dt className="eyebrow text-baize-300">Venue</dt>
+              <dt className="eyebrow text-brass-300">Venue</dt>
               <dd className="mt-1 font-medium text-white">{tournament.venue}</dd>
             </div>
           ) : null}
           {tournament.format ? (
             <div>
-              <dt className="eyebrow text-baize-300">Format</dt>
+              <dt className="eyebrow text-brass-300">Format</dt>
               <dd className="mt-1 font-medium text-white">{tournament.format}</dd>
             </div>
           ) : null}
           <div>
-            <dt className="eyebrow text-baize-300">Matches played</dt>
+            <dt className="eyebrow text-brass-300">Matches played</dt>
             <dd className="mt-1 font-medium text-white tabular-nums">
               {played.length} of {matches.length}
             </dd>
           </div>
           {best !== null ? (
             <div>
-              <dt className="eyebrow text-baize-300">Highest break</dt>
+              <dt className="eyebrow text-brass-300">Highest break</dt>
               <dd className="mt-1 font-bold text-brass-300 tabular-nums">{best}</dd>
             </div>
           ) : null}

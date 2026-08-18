@@ -44,7 +44,7 @@ export function PrimaryButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="rounded-md bg-baize-700 px-4 py-2 text-sm font-semibold text-white hover:bg-baize-600 disabled:cursor-not-allowed disabled:opacity-60"
+      className="rounded-md bg-crimson-700 px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-600 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {children}
     </button>

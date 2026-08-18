@@ -1,12 +1,12 @@
 import { ASSOCIATION_NAME } from '../lib/brand.ts'
 
 /**
- * The association badge.
+ * The association badge: the crimson disc inside its laurel wreath.
  *
- * The source file is a 244px square with the badge centred on white, so
- * `rounded-full` crops the corners away and leaves the disc reading as a
- * badge on any background. It is intentionally never rendered much above its
- * native size — beyond that the scan starts to show.
+ * The source is a 720×624 PNG with the white surround cut away, so it drops
+ * onto the maroon masthead and the parchment page alike without a plate behind
+ * it. `object-contain` keeps the wreath tips intact when a caller sizes it with
+ * a square utility such as `size-12`.
  */
 export function Logo({
   className = '',
@@ -18,11 +18,11 @@ export function Logo({
 }) {
   return (
     <img
-      src="/logo.jpg"
+      src="/logo.png"
       alt={decorative ? '' : ASSOCIATION_NAME}
-      width={244}
-      height={243}
-      className={`rounded-full bg-white object-cover ${className}`}
+      width={720}
+      height={624}
+      className={`object-contain ${className}`}
     />
   )
 }
